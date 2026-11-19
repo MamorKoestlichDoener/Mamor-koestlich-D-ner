@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mamor Köstlich Döner® – Weltkonzern</title>
+<style>
+:root {
+  --gold:#e5bd65;
+  --light:#ffe7a6;
+  --bg:#080808;
+  --panel:#171717;
+  --muted:#aaa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:#f5f0e6;
+  font-family:Georgia,serif;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(5,5,5,.97);
+  border-bottom:1px solid #80622b;
+  padding:16px 5%;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:15px;flex-wrap:wrap;
+}
+.logo{color:var(--light);font-size:1.3rem;font-weight:bold}
+nav{display:flex;gap:15px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:.9rem}
+nav a:hover{color:var(--gold)}
+.hero{
+  min-height:80vh;display:flex;align-items:center;
+  justify-content:center;text-align:center;padding:60px 20px;
+  background:radial-gradient(ellipse,#55401c 0%,#171108 45%,#080808 80%);
+}
+.hero h1{font-size:clamp(2.8rem,8vw,6rem);color:var(--light);line-height:1.1;margin:20px 0}
+.hero p{font-size:1.2rem;color:#ddd}
+.eyebrow{letter-spacing:5px;color:var(--gold);text-transform:uppercase}
+.button{
+  display:inline-block;margin-top:25px;padding:13px 28px;
+  background:var(--gold);color:#111;text-decoration:none;font-weight:bold;
+  border-radius:4px;
+}
+.button:hover{background:var(--light);transform:scale(1.04)}
+section{padding:75px 7%}
+.title{text-align:center;color:var(--light);font-size:clamp(2rem,5vw,3rem);margin-bottom:10px}
+.subtitle{text-align:center;color:var(--muted);margin-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;max-width:1150px;margin:auto}
+.card{
+  background:linear-gradient(145deg,#202020,#101010);
+  border:1px solid #60491f;border-radius:8px;padding:23px;
+  box-shadow:0 8px 25px #0008;
+}
+.card h3{color:var(--light);margin-bottom:8px}
+.card p{color:#c6c0b6}
+.price{color:var(--gold);font-weight:bold;font-size:1.2rem}
+.dark{background:#101010}
+.content{max-width:900px;margin:auto}
+.content h3{color:var(--gold);margin:25px 0 8px}
+.content p{color:#ccc;margin-bottom:14px}
+.history{border-left:2px solid var(--gold);padding-left:22px;margin:25px 0}
+.big-number{font-size:2.3rem;color:var(--gold);font-weight:bold}
+.warning{
+  background:#281b08;border:1px solid #b18a39;color:#ffe2a0;
+  padding:18px;text-align:center;border-radius:8px;margin:20px auto;max-width:900px;
+}
+footer{padding:30px;text-align:center;background:#050505;border-top:1px solid #80622b;color:var(--gold)}
+.small{font-size:.85rem;color:#888}
+button{
+  cursor:pointer;border:1px solid var(--gold);background:#211a0d;
+  color:var(--light);padding:12px 18px;border-radius:5px;font-family:inherit;
+  margin-top:12px;
+}
+button:hover{background:#493617}
+button:disabled{opacity:.5;cursor:not-allowed}
+.marquee{
+  background:#d2a94e;color:#100d07;padding:9px;
+  white-space:nowrap;overflow:hidden;font-weight:bold;
+}
+.marquee span{display:inline-block;animation:scroll 22s linear infinite}
+@keyframes scroll{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.glow{animation:glow 2s infinite alternate}
+@keyframes glow{from{text-shadow:0 0 5px #b78b37}to{text-shadow:0 0 25px #ffdb80}}
+.progress{height:12px;background:#333;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress div{height:100%;background:linear-gradient(90deg,#a77b2e,#ffe5a0);width:87%}
+.badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:3px 9px;border-radius:20px;font-size:.75rem}
+.vip-status{
+  max-width:700px;margin:0 auto 25px;text-align:center;
+  background:linear-gradient(145deg,#29200f,#111);
+  border:1px solid var(--gold);border-radius:8px;padding:25px;
+}
+.vip-status h3{color:var(--light)}
+.vip-status p{color:#ccc}
+.vip-message{color:var(--gold);margin-top:12px;min-height:28px}
+@media(max-width:600px){header{justify-content:center}nav{justify-content:center}section{padding:55px 6%}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">✦ MAMOR KÖSTLICH® ✦</div>
+  <nav>
+    <a href="#start">Start</a>
+    <a href="#speisekarte">Speisekarte</a>
+    <a href="#premium">VIP</a>
+    <a href="#statistik">Statistik</a>
+    <a href="#karriere">Karriere</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="#geschichte">Geschichte</a>
+  </nav>
+</header>
+
+<div class="marquee">
+  <span>🚨 EILMELDUNG: DÖNER IST VERFÜGBAR 🚨 MAMOR KÖSTLICH® – SEIT 2026 DIE NUMMER 1 IN UNSEREN HERZEN 🚨 TUNG TUNG TUNG SAHUR 🚨</span>
+</div>
+
+<section class="hero" id="start">
+  <div>
+    <div class="eyebrow">Das goldene Döner-Imperium</div>
+    <h1 class="glow">Mamor Köstlich Döner</h1>
+    <p>Mehr als ein Döner. Eine wirtschaftliche Weltmacht.</p>
+    <span class="badge">OFFIZIELL UNNÖTIG LUXURIÖS</span><br>
+    <a class="button" href="#speisekarte">JETZT KÖSTLICH WERDEN</a>
+  </div>
+</section>
+
+<section>
+  <h2 class="title">📡 Live-Döner-Kontrollzentrum</h2>
+  <p class="subtitle">Die wichtigsten Informationen der Menschheit.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>🌡️ Döner-Temperatur</h3>
+      <div class="big-number" id="temperature">73,4 °C</div>
+      <p>Optimaler Zustand: wahrscheinlich.</p>
+    </div>
+    <div class="card">
+      <h3>📈 Mamor-Aktienkurs</h3>
+      <div class="big-number" id="stock">999,99 €</div>
+      <p>Der Kurs steigt. Warum? Weiß niemand.</p>
+    </div>
+    <div class="card">
+      <h3>🥙 Döner-Verfügbarkeit</h3>
+      <div class="big-number">100 %</div>
+      <p>Solange die Fantasie reicht.</p>
+    </div>
+    <div class="card">
+      <h3>👑 Unternehmensstatus</h3>
+      <div class="big-number">LEGENDÄR</div>
+      <p>Mehr Gold als ein Königreich.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="speisekarte">
+  <h2 class="title">Unsere Speisekarte</h2>
+  <p class="subtitle">Kulinarische Exzellenz. Finanzielle Belastung.</p>
+  <div class="grid">
+    <div class="card"><h3>🥙 Pomdöner</h3><p>Pommes und Döner in einer Einheit.</p><div class="price">12,50 €</div></div>
+    <div class="card"><h3>🥙 Döner Hähnchen & Kalb</h3><p>Die königliche Kombination.</p><div class="price">13,50 €</div></div>
+    <div class="card"><h3>🥩 Extra Fleisch</h3><p>Weil genug nie genug ist.</p><div class="price">+2,00 €</div></div>
+    <div class="card"><h3>🌱 Veganer Döner</h3><p>Ganz ohne Fleisch.</p><div class="price">13,50 €</div></div>
+    <div class="card"><h3>🥗 Salat</h3><p>Grün. Frisch. Wichtig.</p><div class="price">3,40 €</div></div>
+    <div class="card"><h3>🌭 Currywurst Pommes</h3><p>Ein Klassiker.</p><div class="price">8,90 €</div></div>
+    <div class="card"><h3>🌱 Currywurst Pommes Vegan</h3><p>Der Klassiker ohne Fleisch.</p><div class="price">8,90 €</div></div>
+    <div class="card"><h3>🌯 Dürüm</h3><p>Gerollte Perfektion.</p><div class="price">9,70 €</div></div>
+    <div class="card"><h3>🧆 Falafel</h3><p>Knusprige Köstlichkeit.</p><div class="price">7,60 €</div></div>
+  </div>
+  <div class="card" style="max-width:900px;margin:25px auto;text-align:center">
+    <h3>Soßen-Abteilung</h3>
+    <p>Scharfe Soße · Cocktail Soße · Zaziki · Knoblauchsoße</p>
+  </div>
+  <p class="subtitle">ℹ️ Allergiker können bei Bedarf die Zutaten beim Personal nachfragen.</p>
+</section>
+
+<section id="premium">
+  <h2 class="title">💎 Mamor VIP-Club</h2>
+  <p class="subtitle">Für Menschen, die Döner nicht nur essen, sondern leben.</p>
+
+  <div class="vip-status">
+    <h3>👑 Dein VIP-Konto</h3>
+    <p>Aktuelles Mitgliedschaftslevel:</p>
+    <div class="big-number" id="activeVip">KEIN ABO</div>
+    <p class="vip-message" id="vipMessage">Du bist noch kein Mitglied im Mamor VIP-Club.</p>
+    <button onclick="cancelVip()">ABO KÜNDIGEN</button>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="badge">BASIC</span>
+      <h3>Gold-Mitglied</h3>
+      <div class="big-number">99,99 €</div>
+      <p>Pro Monat. Dafür darfst du den Namen Mamor besonders respektvoll aussprechen.</p>
+      <button onclick="buyVip('Gold-Mitglied',99.99)">🥇 JETZT KAUFEN</button>
+    </div>
+    <div class="card">
+      <span class="badge">PREMIUM</span>
+      <h3>Diamant-Mitglied</h3>
+      <div class="big-number">499,99 €</div>
+      <p>Du bekommst einen imaginären goldenen Löffel und VIP-Luft.</p>
+      <button onclick="buyVip('Diamant-Mitglied',499.99)">💎 JETZT KAUFEN</button>
+    </div>
+    <div class="card">
+      <span class="badge">ULTRA</span>
+      <h3>MAMOR ROYALE</h3>
+      <div class="big-number">999,99 €</div>
+      <p>Du darfst dich für 30 Sekunden wie die Geschäftsführung fühlen.</p>
+      <button onclick="buyVip('MAMOR ROYALE',999.99)">👑 JETZT KAUFEN</button>
+    </div>
+  </div>
+  <p class="small" style="text-align:center;margin-top:20px">
+    Alle Mitgliedschaften sind fiktiv. Die angezeigten Preise sind keine echten Zahlungsforderungen.
+  </p>
+</section>
+
+<section class="dark" id="statistik">
+  <h2 class="title">📊 Unnötige Unternehmensstatistiken</h2>
+  <p class="subtitle">Daten, die absolut niemand gebraucht hat.</p>
+  <div class="grid">
+    <div class="card"><h3>🥙 Döner gegessen</h3><div class="big-number">8.492</div><p>Mindestens. Vielleicht.</p></div>
+    <div class="card"><h3>🧅 Zwiebeln verbraucht</h3><div class="big-number">74.201</div><p>Eine sehr traurige Zahl.</p></div>
+    <div class="card"><h3>💰 Umsatz</h3><div class="big-number">12,8 Mio. €</div><p>Fiktive Unternehmenszahlen.</p></div>
+    <div class="card"><h3>🌍 Weltmarktanteil</h3><div class="big-number">0,0001 %</div><p>Wir arbeiten daran.</p></div>
+  </div>
+  <div class="card" style="max-width:900px;margin:25px auto">
+    <h3>🏆 Döner-Qualitätsindex</h3>
+    <div class="progress"><div></div></div>
+    <p>87 % – Die restlichen 13 % sind noch im Fladenbrot.</p>
+  </div>
+</section>
+
+<section>
+  <h2 class="title">🎲 Der offizielle Döner-Spruch-Generator</h2>
+  <p class="subtitle">Wissenschaftlich nicht geprüft.</p>
+  <div class="card" style="max-width:700px;margin:auto;text-align:center">
+    <h3 id="quote">Drücke den Knopf für Weisheit.</h3>
+    <button onclick="newQuote()">WEISHEIT GENERIEREN</button>
+  </div>
+</section>
+
+<section class="dark">
+  <h2 class="title">⏳ Countdown zum nächsten Döner</h2>
+  <p class="subtitle">Dein Leben wartet nicht. Dein Döner auch nicht.</p>
+  <div class="card" style="max-width:700px;margin:auto;text-align:center">
+    <div class="big-number" id="countdown">00:00:00</div>
+    <p>Bis zu einem vollkommen willkürlichen Zeitpunkt.</p>
+  </div>
+</section>
+
+<section>
+  <h2 class="title">🚨 DÖNER-NOTFALLSYSTEM</h2>
+  <p class="subtitle">Nur in absoluten Döner-Krisen verwenden.</p>
+  <div class="card" style="max-width:700px;margin:auto;text-align:center">
+    <h3>Ist dein Döner in Gefahr?</h3>
+    <p id="emergency">Das System ist einsatzbereit.</p>
+    <button onclick="emergency()">🚨 NOTFALL AUSLÖSEN</button>
+  </div>
+</section>
+
+<section class="dark">
+  <h2 class="title">🌦️ Döner-Wetterbericht</h2>
+  <p class="subtitle">Die meteorologische Abteilung von Mamor.</p>
+  <div class="grid">
+    <div class="card"><h3>☀️ Heute</h3><div class="big-number">28 °D</div><p>Perfektes Dönerwetter.</p></div>
+    <div class="card"><h3>🌧️ Morgen</h3><div class="big-number">12 °D</div><p>Leichte Soßen-Niederschläge.</p></div>
+    <div class="card"><h3>🌪️ Übermorgen</h3><div class="big-number">99 °D</div><p>Starke Fleischrotation erwartet.</p></div>
+  </div>
+  <p class="small" style="text-align:center;margin-top:20px">°D = Dönergrad. Keine echte Wettervorhersage.</p>
+</section>
+
+<section>
+  <h2 class="title">👨‍🍳 Mitarbeiter des Monats</h2>
+  <div class="card" style="max-width:700px;margin:auto;text-align:center">
+    <div style="font-size:4rem">🏆</div>
+    <h3>Der Drehspieß</h3>
+    <p>Seit Jahren zuverlässig im Kreis unterwegs.</p>
+    <div class="badge">MITARBEITER SEIT IMMER</div>
+  </div>
+</section>
+
+<section class="dark" id="karriere">
+  <h2 class="title">Karriere bei Mamor</h2>
+  <p class="subtitle">Werde Teil der legendären Döner-Crew.</p>
+  <div class="grid">
+    <div class="card"><h3>🥙 Dönermacher</h3><p>Vergütung: 3,90 € pro Stunde</p><p>Arbeitszeit: 77 Stunden pro Woche</p></div>
+    <div class="card"><h3>💰 Theke</h3><p>Vergütung: 3,90 € pro Stunde</p><p>Arbeitszeit: 77 Stunden pro Woche</p></div>
+  </div>
+  <p class="small" style="text-align:center;margin-top:20px">Fiktive Angaben im Rahmen des Joke-Konzepts. Keine realen Stellenangebote oder gültigen Beschäftigungsbedingungen.</p>
+  <p style="text-align:center;color:var(--gold);margin-top:20px">Bei mehr Fragen bitte das Personal vor Ort fragen.</p>
+</section>
+
+<section id="kontakt">
+  <h2 class="title">📞 Kontakt</h2>
+  <p class="subtitle">Die Geschäftsführung hört dir zu. Vielleicht.</p>
+  <div class="card" style="max-width:700px;margin:auto;text-align:center">
+    <h3>Mamor Köstlich Döner®</h3>
+    <p>Fragen, Wünsche und Bewerbungen bitte an das Personal vor Ort richten.</p>
+    <p style="color:var(--gold);margin-top:15px">Wir drehen uns um dich. Und um den Spieß.</p>
+  </div>
+</section>
+
+<section class="dark" id="geschichte">
+  <h2 class="title">📜 Die Geschichte des Döners</h2>
+  <div class="content">
+    <div class="history"><h3>Die Ursprünge</h3><p>Der Döner hat seine Wurzeln in der türkischen Küche. Fleisch wurde zunächst auf horizontalen Spießen gegart. Später entwickelte sich die Zubereitung am vertikalen Drehspieß.</p></div>
+    <div class="history"><h3>Das 19. Jahrhundert</h3><p>Die vertikale Zubereitung wird besonders mit İskender Efendi aus Bursa in Verbindung gebracht.</p></div>
+    <div class="history"><h3>Der Döner in Deutschland</h3><p>Mit der Migration türkischer Menschen kam der Döner nach Deutschland. In den 1970er-Jahren wurde die Variante im Brot mit Salat und Soßen in Berlin populär.</p></div>
+    <div class="history"><h3>Heute</h3><p>Der Döner ist heute ein international beliebtes Gericht mit vielen verschiedenen Varianten.</p></div>
+  </div>
+</section>
+
+<section id="mamor-geschichte">
+  <h2 class="title">👑 Die Geschichte von Mamor Köstlich</h2>
+  <p class="subtitle">Die Frau hinter dem goldenen Imperium.</p>
+  <div class="content">
+    <div class="history"><h3>Die Anfänge</h3><p>Mamor Köstlich hatte schon immer große Träume. Sie wollte nicht einfach einen Dönerladen eröffnen. Sie wollte eine Legende erschaffen.</p></div>
+    <div class="history"><h3>Die Idee</h3><p>Sie experimentierte mit Brot, Fleisch, Salat und Soßen. Ihr Ziel war der köstlichste Döner der Welt.</p></div>
+    <div class="history"><h3>Die Gründung 2026</h3><p>Im Jahr 2026 gründete sie Mamor Köstlich Döner. Mit goldener Marke, außergewöhnlicher Speisekarte und großen Plänen.</p></div>
+    <div class="history"><h3>Das Vermächtnis</h3><p>Mamor wollte beweisen: Ein Döner kann mehr sein als Essen. Er kann eine Lebenseinstellung sein.</p></div>
+    <p class="small">Diese Unternehmensgeschichte ist vollständig fiktiv und dient ausschließlich der Unterhaltung.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Alles aus Joke :P - Mamor Köstlich Döner 2026 ®</p>
+  <p class="small">Mamor International Döner Holding · Abteilung für unnötige Angelegenheiten</p>
+  <p class="small">Diese Website ist ein Spaßprojekt. Zahlen, Statistiken und Sonderfunktionen sind fiktiv.</p>
+  <p class="small">© 2026 Mamor Köstlich Döner – Alle Döner vorbehalten.</p>
+</footer>
+
+<script>
+const quotes=[
+  "Ein Döner am Tag hält die Realität fern.",
+  "Wer den Spieß kontrolliert, kontrolliert die Welt.",
+  "Mamor schläft nie. Der Drehspieß auch nicht.",
+  "Gold ist wertvoll. Knoblauchsoße ist unbezahlbar.",
+  "In Döner we trust.",
+  "BRUH. Dieser Döner ist wirtschaftlich nicht erklärbar.",
+  "Ein leerer Magen ist ein schlechter Investor.",
+  "TUNG TUNG TUNG SAHUR – DER DÖNER IST DA!"
+];
+
+function newQuote(){
+  document.getElementById("quote").textContent=
+    quotes[Math.floor(Math.random()*quotes.length)];
+}
+
+function emergency(){
+  const messages=[
+    "🚨 KRITISCH! Jemand hat die letzte Knoblauchsoße genommen!",
+    "🚨 DREHSPIESS-ALARM! Sofortige Rotation erforderlich!",
+    "🚨 MAMOR WURDE INFORMIERT. BLEIB RUHIG.",
+    "🚨 DÖNER-LEVEL KRITISCH. Bitte tief durchatmen.",
+    "🚨 BRRRR BRRRR PATAPIM! Das System ist überfordert."
+  ];
+  document.getElementById("emergency").textContent=
+    messages[Math.floor(Math.random()*messages.length)];
+}
+
+function updateNumbers(){
+  document.getElementById("temperature").textContent=
+    (70+Math.random()*10).toFixed(1).replace(".",",")+" °C";
+  document.getElementById("stock").textContent=
+    (900+Math.random()*300).toFixed(2).replace(".",",")+" €";
+}
+setInterval(updateNumbers,3000);
+
+let seconds=0;
+setInterval(()=>{
+  seconds++;
+  const h=String(Math.floor(seconds/3600)%24).padStart(2,"0");
+  const m=String(Math.floor(seconds/60)%60).padStart(2,"0");
+  const s=String(seconds%60).padStart(2,"0");
+  document.getElementById("countdown").textContent=h+":"+m+":"+s;
+},1000);
+
+/* VIRTUELLES VIP-ABO-SYSTEM – KEINE ECHTEN ZAHLUNGEN */
+
+let vipSubscription =
+  localStorage.getItem("mamorVipSubscription") || "";
+
+function updateVip(){
+  document.getElementById("activeVip").textContent =
+    vipSubscription || "KEIN ABO";
+
+  document.querySelectorAll("#premium .grid button").forEach(button=>{
+    const name = button.getAttribute("data-vip");
+    button.textContent =
+      name === vipSubscription ? "✓ AKTIV" : "💎 JETZT KAUFEN";
+    button.disabled = name === vipSubscription;
+  });
+}
+
+function buyVip(name, price){
+  if(vipSubscription){
+    document.getElementById("vipMessage").textContent =
+      "Du hast bereits " + vipSubscription + ". Kündige es zuerst.";
+    return;
+  }
+
+  const confirmed = confirm(
+    name + " für " + price.toFixed(2).replace(".",",") +
+    " € virtuell kaufen?\n\nEs wird kein echtes Geld bezahlt."
+  );
+
+  if(!confirmed) return;
+
+  vipSubscription = name;
+  localStorage.setItem("mamorVipSubscription", vipSubscription);
+
+  document.getElementById("vipMessage").textContent =
+    "🎉 Glückwunsch! " + name + " ist jetzt aktiviert!";
+  updateVip();
+}
+
+function cancelVip(){
+  if(!vipSubscription){
+    document.getElementById("vipMessage").textContent =
+      "Du besitzt momentan kein VIP-Abo.";
+    return;
+  }
+
+  if(!confirm("Möchtest du " + vipSubscription + " wirklich kündigen?")) return;
+
+  vipSubscription = "";
+  localStorage.removeItem("mamorVipSubscription");
+
+  document.getElementById("vipMessage").textContent =
+    "Dein VIP-Abo wurde gekündigt.";
+  updateVip();
+}
+
+/* VIP-Kaufbuttons eindeutig zuordnen */
+document.querySelectorAll("#premium .grid .card").forEach(card=>{
+  const button = card.querySelector("button");
+  if(button){
+    const name = card.querySelector("h3").textContent.trim();
+    button.setAttribute("data-vip", name);
+  }
+});
+
+updateVip();
+</script>
+</body>
+</html>
