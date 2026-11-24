@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#080808">
+<title>Mamor Köstlich Döner® – Weltkonzern</title>
+<style>
+:root{--gold:#e5bd65;--light:#ffe7a6;--bg:#080808;--panel:#171717;--muted:#aaa}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:#f5f0e6;font-family:Georgia,serif;line-height:1.7;overflow-x:hidden}
+header{position:sticky;top:0;z-index:20;background:rgba(5,5,5,.97);border-bottom:1px solid #80622b;padding:13px 4%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{color:var(--light);font-size:1.2rem;font-weight:bold}
+nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:.85rem}nav a:hover{color:var(--gold)}
+button{cursor:pointer;border:1px solid var(--gold);background:#211a0d;color:var(--light);padding:12px 18px;border-radius:5px;font-family:inherit;font-size:16px;margin-top:12px;-webkit-appearance:none;touch-action:manipulation}
+button:hover{background:#493617}button:disabled{opacity:.6;cursor:default}
+.music-toggle{margin:0;padding:5px 10px;font-size:12px;border-radius:20px}
+.hero{min-height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;background:radial-gradient(ellipse,#55401c 0%,#171108 45%,#080808 80%)}
+.hero h1{font-size:clamp(2.8rem,8vw,6rem);color:var(--light);line-height:1.1;margin:20px 0}
+.hero p{font-size:1.2rem;color:#ddd}.eyebrow{letter-spacing:5px;color:var(--gold);text-transform:uppercase}
+.button{display:inline-block;margin-top:25px;padding:13px 28px;background:var(--gold);color:#111;text-decoration:none;font-weight:bold;border-radius:4px}
+section{padding:70px 7%}.title{text-align:center;color:var(--light);font-size:clamp(2rem,5vw,3rem);margin-bottom:10px}
+.subtitle{text-align:center;color:var(--muted);margin-bottom:35px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;max-width:1150px;margin:auto}
+.card{background:linear-gradient(145deg,#202020,#101010);border:1px solid #60491f;border-radius:8px;padding:23px;box-shadow:0 8px 25px #0008}
+.card h3{color:var(--light);margin-bottom:8px}.card p{color:#c6c0b6}
+.price{color:var(--gold);font-weight:bold;font-size:1.2rem}.dark{background:#101010}
+.content{max-width:900px;margin:auto}.content h3{color:var(--gold);margin:25px 0 8px}.content p{color:#ccc;margin-bottom:14px}
+.history{border-left:2px solid var(--gold);padding-left:22px;margin:25px 0}
+.big-number{font-size:2.3rem;color:var(--gold);font-weight:bold}
+footer{padding:30px;text-align:center;background:#050505;border-top:1px solid #80622b;color:var(--gold)}
+.small{font-size:.85rem;color:#888}
+.marquee{background:#d2a94e;color:#100d07;padding:9px;white-space:nowrap;overflow:hidden;font-weight:bold}
+.marquee span{display:inline-block;animation:scroll 22s linear infinite}
+@keyframes scroll{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.glow{animation:glow 2s infinite alternate}@keyframes glow{from{text-shadow:0 0 5px #b78b37}to{text-shadow:0 0 25px #ffdb80}}
+.progress{height:12px;background:#333;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress div{height:100%;background:linear-gradient(90deg,#a77b2e,#ffe5a0);width:87%}
+.badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:3px 9px;border-radius:20px;font-size:.75rem}
+.vip-status{max-width:700px;margin:0 auto 25px;text-align:center;background:linear-gradient(145deg,#29200f,#111);border:1px solid var(--gold);border-radius:8px;padding:25px}
+.vip-status h3{color:var(--light)}.vip-status p{color:#ccc}.vip-message{color:var(--gold);margin-top:12px;min-height:28px}
+input,textarea{display:block;width:100%;padding:14px;margin:10px 0;background:#101010;color:white;border:1px solid #80622b;border-radius:7px;font-family:Arial,sans-serif;font-size:16px!important;line-height:1.4;-webkit-appearance:none;touch-action:manipulation}
+textarea{resize:vertical;min-height:100px}input:focus,textarea:focus{outline:2px solid var(--gold)}
+.rating-box{max-width:700px;margin:auto;text-align:center}.stars{display:flex;justify-content:center;gap:8px;margin:20px 0}
+.star{font-size:2.5rem;background:none;border:0;padding:0;margin:0;color:#555}.star.selected{color:#ffd45e}
+.rating-message{min-height:35px;margin-top:15px;color:var(--gold)}.rating-error{color:#ff5555}.rating-success{color:#8ee69b}
+.review-item{text-align:left;border-top:1px solid #60491f;padding:15px 5px;margin-top:15px;overflow-wrap:anywhere}
+.chat-window{max-width:700px;margin:auto;background:#111;border:1px solid #80622b;border-radius:8px;overflow:hidden}
+.chat-header{padding:18px;background:#211a0d;color:var(--light)}
+.chat-messages{min-height:180px;max-height:350px;overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:12px}
+.chat-message{padding:12px 15px;border-radius:8px;max-width:85%;overflow-wrap:anywhere}
+.bot-message{background:#302515;align-self:flex-start;color:#ffe7a6}.user-message{background:#51401e;align-self:flex-end;color:white}
+.chat-controls{display:flex;gap:8px;padding:12px;border-top:1px solid #55401c;align-items:center}
+.chat-controls input{margin:0;min-width:0;flex:1}.chat-controls button{margin:0;white-space:nowrap}
+/* Der Player bleibt außerhalb des sichtbaren Bereichs. Es wird kein Video angezeigt. */
+.youtube-player{position:fixed;width:200px;height:200px;left:-1000px;top:0;opacity:.01;pointer-events:none;border:0}
+.news-date{font-size:.8rem;color:#aaa;margin-bottom:8px}.news-category{color:var(--gold);font-size:.8rem;text-transform:uppercase}
+.news-card{border-left:3px solid var(--gold)}.quiz-option{display:block;width:100%;text-align:left;margin:9px 0}
+.quiz-option.correct{background:#164322;border-color:#62c878}.quiz-option.wrong{background:#541b1b;border-color:#e66}
+.quiz-info{color:var(--gold);margin:12px 0}.quiz-question{font-size:1.2rem;color:var(--light);margin:15px 0}
+.quiz-result{font-size:1.5rem;color:var(--gold);margin:15px 0}.live-dot{color:#ff5555;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}#secretContent h3{color:var(--gold);margin-top:25px}#secretContent p{color:#ddd;margin:8px 0}
+
+/* FAKE WINDOWS BSOD */
+#bsodOverlay{display:none;position:fixed;inset:0;z-index:999999;width:100%;height:100%;min-height:100vh;min-height:100dvh;background:#0078d7;color:#fff;font-family:"Segoe UI",Arial,sans-serif;padding:10vh 9vw 5vh;overflow:auto}
+#bsodOverlay.active{display:flex;align-items:center;justify-content:center}
+.bsod-content{width:100%;max-width:850px}
+.bsod-face{font-size:clamp(65px,12vw,110px);line-height:1.2;margin-bottom:25px}
+.bsod-title{font-size:clamp(23px,4vw,34px);font-weight:400;line-height:1.4;margin-bottom:18px}
+.bsod-text{font-size:clamp(15px,2vw,19px);line-height:1.6;margin-bottom:25px}
+.bsod-progress{font-size:18px;margin:25px 0}
+.bsod-bottom{display:flex;align-items:center;gap:25px;margin-top:35px;flex-wrap:wrap}
+.bsod-qr{width:121px;height:121px;flex-shrink:0;display:block;background:#0078d7;border:8px solid #fff;image-rendering:pixelated}
+.bsod-small{font-size:12px;line-height:1.5}
+#quote{white-space:pre-line}
+#closeBsod{position:absolute;top:0;right:0;width:75px;height:75px;opacity:0;border:0;background:transparent;cursor:pointer;z-index:1000000;margin:0;padding:0}
+@media(max-width:600px){#bsodOverlay{padding:9vh 7vw 4vh}.bsod-bottom{gap:15px}}
+
+@media(max-width:600px){header{justify-content:center}nav{justify-content:center}section{padding:55px 6%}.chat-controls{flex-wrap:wrap}.chat-controls input,.chat-controls button{width:100%}}
+
+
+/* ✨ MAMOR ULTRA-FANCY MOTION PACK – rein visuell, Funktionen bleiben erhalten */
+:root{--gold-glow:rgba(229,189,101,.38);--gold-soft:rgba(255,231,166,.12)}
+html{scroll-padding-top:90px}
+body{background-image:radial-gradient(ellipse at 15% 10%,rgba(166,119,42,.10),transparent 34%),radial-gradient(ellipse at 85% 35%,rgba(255,220,145,.055),transparent 30%);background-attachment:fixed}
+body:before{content:"";position:fixed;inset:-40%;z-index:-1;pointer-events:none;background:conic-gradient(from 0deg,transparent 0 25%,rgba(229,189,101,.035) 32%,transparent 42% 70%,rgba(229,189,101,.025) 78%,transparent 90%);animation:mamorAurora 38s linear infinite}
+@keyframes mamorAurora{to{transform:rotate(360deg)}}
+header{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(5,5,5,.78);box-shadow:0 8px 35px #0008;transition:padding .3s,background .3s}
+.logo{position:relative;text-shadow:0 0 14px var(--gold-glow);animation:logoPulse 3s ease-in-out infinite}
+@keyframes logoPulse{50%{text-shadow:0 0 24px rgba(255,220,145,.8),0 0 45px rgba(229,189,101,.35)}}
+nav a{position:relative;transition:color .25s,transform .25s}nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:2px;background:var(--gold);box-shadow:0 0 10px var(--gold);transition:right .25s}nav a:hover{transform:translateY(-2px)}nav a:hover:after{right:0}
+.hero{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#725326 0%,#251a0a 40%,#080808 78%)}
+.hero:before,.hero:after{content:"";position:absolute;z-index:-1;width:min(65vw,650px);aspect-ratio:1;border:1px solid rgba(255,226,158,.13);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 60px rgba(229,189,101,.08),inset 0 0 60px rgba(229,189,101,.05);animation:heroOrbit 18s linear infinite}
+.hero:after{width:min(85vw,850px);animation-duration:27s;animation-direction:reverse;border-style:dashed;opacity:.6}
+@keyframes heroOrbit{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hero>div{animation:heroEnter 1.1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes heroEnter{from{opacity:0;transform:translateY(35px) scale(.97);filter:blur(8px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.hero h1{background:linear-gradient(100deg,#fff1c8 5%,#d5a94f 28%,#fff8df 48%,#c18d35 68%,#fff0c2 90%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:goldShimmer 6s linear infinite}
+@keyframes goldShimmer{to{background-position:220% center}}
+.eyebrow{animation:eyebrowBlink 4s ease-in-out infinite}@keyframes eyebrowBlink{50%{letter-spacing:8px;text-shadow:0 0 18px var(--gold)}}
+section .title{text-shadow:0 0 22px rgba(229,189,101,.13)}
+.card,.vip-status,.chat-window,.rating-box{position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
+.card:before,.vip-status:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 0%,rgba(255,235,184,.055) 45%,transparent 60%);transform:translateX(-130%);transition:transform .8s ease}
+.card:hover,.vip-status:hover{transform:translateY(-7px) scale(1.012);border-color:#e5bd65;box-shadow:0 18px 45px #0009,0 0 22px rgba(229,189,101,.12)}
+.card:hover:before,.vip-status:hover:before{transform:translateX(130%)}
+button,.button{position:relative;overflow:hidden;transition:transform .2s,box-shadow .25s,background .25s}
+button:hover,.button:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(229,189,101,.2)}
+button:active,.button:active{transform:scale(.97)}
+button:after,.button:after{content:"";position:absolute;top:-60%;left:-80%;width:45%;height:220%;transform:rotate(25deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transition:left .55s}
+button:hover:after,.button:hover:after{left:140%}
+.badge{box-shadow:0 0 15px rgba(229,189,101,.12);animation:badgeGlow 3s ease-in-out infinite}@keyframes badgeGlow{50%{box-shadow:0 0 20px rgba(229,189,101,.32)}}
+.marquee{box-shadow:0 4px 22px rgba(210,169,78,.17)}
+.progress{box-shadow:inset 0 2px 7px #0009}.progress div{position:relative;overflow:hidden;background:linear-gradient(90deg,#8f6420,#ffe5a0,#b98228);background-size:200% 100%;animation:progressGold 4s linear infinite}
+.progress div:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:progressSweep 2.5s ease-in-out infinite}
+@keyframes progressGold{to{background-position:200% 0}}@keyframes progressSweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.big-number{ text-shadow:0 0 18px rgba(229,189,101,.2)}
+.live-dot{filter:drop-shadow(0 0 5px #f55)}
+/* Elemente erscheinen beim Scrollen weich und nacheinander. */
+.js-reveal{opacity:0;transform:translateY(28px) scale(.985);filter:blur(5px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.75,.2,1),filter .75s ease}
+.js-reveal.is-visible{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+.grid .card.js-reveal:nth-child(2){transition-delay:.08s}.grid .card.js-reveal:nth-child(3){transition-delay:.16s}.grid .card.js-reveal:nth-child(4){transition-delay:.24s}
+#scrollProgress{position:fixed;z-index:1000;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#a97825,#fff0b8,#d09a3c);box-shadow:0 0 12px #e5bd65;pointer-events:none}
+#backToTop{position:fixed;right:18px;bottom:18px;z-index:100;opacity:0;visibility:hidden;transform:translateY(15px);border-radius:50%;width:48px;height:48px;padding:0;margin:0;background:rgba(25,20,12,.9);backdrop-filter:blur(10px);font-size:20px;transition:opacity .25s,transform .25s,visibility .25s}
+#backToTop.visible{opacity:1;visibility:visible;transform:translateY(0)}
+@media(hover:none){.card:hover,.vip-status:hover{transform:none;box-shadow:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.js-reveal{opacity:1;transform:none;filter:none}}
+
+
+
+/* ═══ MAMOR SIGNATURE EXPERIENCE · Premium motion layer ═══ */
+:root{--mx:50vw;--my:30vh;--ease-premium:cubic-bezier(.16,1,.3,1)}
+body{position:relative}
+body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(520px circle at var(--mx) var(--my),rgba(229,189,101,.075),transparent 70%)}
+#mamorParticles{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.48}
+body>*:not(#mamorParticles){position:relative;z-index:1}
+header{transition:background .35s,border-color .35s,box-shadow .35s}
+header.is-scrolled{background:rgba(5,5,5,.94);border-bottom-color:rgba(255,224,153,.55);box-shadow:0 12px 45px #000b,0 1px 0 rgba(255,225,160,.08)}
+nav a.is-current{color:var(--light);text-shadow:0 0 14px rgba(229,189,101,.45)}
+nav a.is-current:after{right:0}
+.hero{background-image:radial-gradient(ellipse at 50% 40%,rgba(124,89,35,.9),rgba(37,26,10,.92) 42%,#080808 82%),linear-gradient(120deg,transparent,rgba(255,255,255,.025),transparent)}
+.hero:before{border-color:rgba(255,226,158,.2);box-shadow:0 0 90px rgba(229,189,101,.12),inset 0 0 80px rgba(229,189,101,.07)}
+.hero .badge{backdrop-filter:blur(8px);background:rgba(15,12,7,.35)}
+section{position:relative}
+section:not(.hero):before{content:"";position:absolute;top:0;left:50%;width:min(76%,850px);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(229,189,101,.32),transparent)}
+.title{letter-spacing:.015em}
+.card,.vip-status,.chat-window,.rating-box{backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);background-color:rgba(20,20,20,.88)}
+.card{border-color:rgba(180,139,63,.55);box-shadow:0 12px 35px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035)}
+.card h3{transition:color .3s,text-shadow .3s}
+.card:hover h3{color:#fff0bd;text-shadow:0 0 18px rgba(229,189,101,.25)}
+.price{display:inline-block;transition:transform .3s var(--ease-premium),text-shadow .3s}
+.card:hover .price{transform:translateX(4px);text-shadow:0 0 16px rgba(229,189,101,.42)}
+button,.button{isolation:isolate}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #fff0b8;outline-offset:4px;box-shadow:0 0 0 5px rgba(229,189,101,.2)}
+#backToTop{box-shadow:0 8px 30px #0009,0 0 20px rgba(229,189,101,.16)}
+#backToTop:hover{transform:translateY(-5px) rotate(8deg)}
+footer{position:relative;overflow:hidden}
+footer:before{content:"";position:absolute;top:0;left:-60%;width:45%;height:1px;background:linear-gradient(90deg,transparent,#fff0bd,transparent);animation:footerGlint 7s ease-in-out infinite}
+@keyframes footerGlint{0%,30%{left:-60%;opacity:0}45%{opacity:1}75%,100%{left:120%;opacity:0}}
+/* Optional premium motion is automatically toned down for accessibility. */
+@media(hover:hover) and (pointer:fine){.card{transition:transform .45s var(--ease-premium),border-color .35s,box-shadow .4s,background .4s}.card:hover{box-shadow:0 24px 55px rgba(0,0,0,.42),0 0 30px rgba(229,189,101,.12),inset 0 1px 0 rgba(255,255,255,.07)}}
+@media(prefers-reduced-motion:reduce){#mamorParticles{display:none}body:after{display:none}}
+
+</style>
+</head>
+<body>
+
+<canvas id="mamorParticles" aria-hidden="true"></canvas>
+
+
+<div id="musicPlayer" class="youtube-player"></div>
+
+<header>
+  <div class="logo">✦ MAMOR KÖSTLICH® ✦</div>
+  <nav>
+    <a href="#start">Start</a><a href="#speisekarte">Speisekarte</a><a href="#nachrichten">Nachrichten</a>
+    <a href="#quiz">Quiz</a><a href="#premium">VIP</a><a href="#bewertungen">Bewertungen</a>
+    <a href="#support">Support</a><a href="#statistik">Statistik</a><a href="#geschichte">Geschichte</a>
+    <button type="button" id="musicToggle" class="music-toggle">🎵 Musik AN</button>
+  </nav>
+</header>
+
+<div class="marquee"><span>🚨 EILMELDUNG: DÖNER IST VERFÜGBAR 🚨 MAMOR KÖSTLICH® – SEIT 2026 DIE NUMMER 1 🚨 TUNG TUNG TUNG SAHUR 🚨</span></div>
+
+<section class="hero" id="start"><div>
+  <div class="eyebrow">Das goldene Döner-Imperium</div><h1 class="glow">Mamor Köstlich Döner</h1>
+  <p>Mehr als ein Döner. Eine wirtschaftliche Weltmacht.</p><span class="badge">OFFIZIELL UNNÖTIG LUXURIÖS</span><br>
+  <a class="button" href="#speisekarte">JETZT KÖSTLICH WERDEN</a>
+</div></section>
+
+<section><h2 class="title">📡 Live-Döner-Kontrollzentrum</h2><p class="subtitle">Die wichtigsten Informationen der Menschheit.</p>
+<div class="grid">
+  <div class="card"><h3>🌡️ Döner-Temperatur</h3><div class="big-number" id="temperature">73,4 °C</div><p>Optimaler Zustand: wahrscheinlich.</p></div>
+  <div class="card"><h3>📈 Mamor-Aktienkurs</h3><div class="big-number" id="stock">999,99 €</div><p>Der Kurs steigt. Warum? Weiß niemand.</p></div>
+  <div class="card"><h3>🥙 Döner-Verfügbarkeit</h3><div class="big-number">100 %</div><p>Solange die Fantasie reicht.</p></div>
+  <div class="card"><h3>👑 Unternehmensstatus</h3><div class="big-number">LEGENDÄR</div><p>Mehr Gold als ein Königreich.</p></div>
+</div></section>
+
+<section class="dark" id="speisekarte"><h2 class="title">Unsere Speisekarte</h2><p class="subtitle">Kulinarische Exzellenz. Finanzielle Belastung.</p>
+<div class="grid">
+  <div class="card"><h3>🥙 Pomdöner</h3><p>Pommes und Döner in einer Einheit.</p><div class="price">12,50 €</div></div>
+  <div class="card"><h3>🥙 Döner Hähnchen & Kalb</h3><p>Die königliche Kombination.</p><div class="price">13,50 €</div></div>
+  <div class="card"><h3>🥩 Extra Fleisch</h3><p>Weil genug nie genug ist.</p><div class="price">+2,00 €</div></div>
+  <div class="card"><h3>🌱 Veganer Döner</h3><p>Ganz ohne Fleisch.</p><div class="price">13,50 €</div></div>
+  <div class="card"><h3>🥗 Salat</h3><p>Grün. Frisch. Wichtig.</p><div class="price">3,40 €</div></div>
+  <div class="card"><h3>🌭 Currywurst Pommes</h3><p>Ein Klassiker.</p><div class="price">8,90 €</div></div>
+  <div class="card"><h3>🌱 Currywurst Pommes Vegan</h3><p>Der Klassiker ohne Fleisch.</p><div class="price">8,90 €</div></div>
+  <div class="card"><h3>🌯 Dürüm</h3><p>Gerollte Perfektion.</p><div class="price">9,70 €</div></div>
+  <div class="card"><h3>🧆 Falafel</h3><p>Knusprige Köstlichkeit.</p><div class="price">7,60 €</div></div>
+</div>
+<div class="card" style="max-width:900px;margin:25px auto;text-align:center"><h3>Soßen-Abteilung</h3><p>Scharfe Soße · Cocktail Soße · Zaziki · Knoblauchsoße</p></div>
+</section>
+
+<section id="nachrichten"><h2 class="title">📰 Mamor Nachrichten <span class="badge"><span class="live-dot">●</span> LIVE</span></h2>
+<p class="subtitle">Die wichtigsten Meldungen aus dem Döner-Universum.</p>
+<div style="text-align:center;margin-bottom:25px"><button type="button" id="newsButton">📰 NEUE EILMELDUNG LADEN</button><p class="small" id="newsStatus">Nachrichtenredaktion ist live.</p></div>
+<div class="grid" id="newsList">
+  <div class="card news-card"><div class="news-category">Wirtschaft</div><div class="news-date">20. November 2026</div><h3>Mamor-Aktie erreicht neues Rekordhoch</h3><p>Die Mamor-Aktie ist auf unglaubliche 999,99 € gestiegen. Analysten vermuten einen Zusammenhang mit extra Knoblauchsoße.</p></div>
+  <div class="card news-card"><div class="news-category">Unternehmen</div><div class="news-date">19. November 2026</div><h3>Mamor plant weltweite Expansion</h3><p>Die Geschäftsführung plant angeblich eine Filiale auf dem Mond. Die Verhandlungen mit der NASA laufen – vielleicht.</p></div>
+  <div class="card news-card"><div class="news-category">Skandal</div><div class="news-date">18. November 2026</div><h3>Letzte Knoblauchsoße verschwunden</h3><p>Ein dramatischer Vorfall erschüttert die Belegschaft. Die Ermittlungen laufen auf Hochtouren.</p></div>
+  <div class="card news-card"><div class="news-category">Sport</div><div class="news-date">17. November 2026</div><h3>Drehspieß gewinnt Weltmeisterschaft</h3><p>Mit 360 Grad pro Runde sichert sich der Spieß den Titel. Die Konkurrenz hatte keine Chance.</p></div>
+</div><p class="small" style="text-align:center;margin-top:20px">Alle Nachrichten sind fiktiv und dienen der Unterhaltung.</p>
+</section>
+
+<section class="dark" id="quiz"><h2 class="title">🧠 Das große Döner-Quiz</h2><p class="subtitle">Beweise, dass du würdig bist, Mamor zu kennen.</p>
+<div class="card" style="max-width:700px;margin:auto;text-align:center">
+  <div class="quiz-info" id="quizProgress">Frage 1 von 10</div><div class="progress"><div id="quizBar" style="width:0%"></div></div>
+  <h3 class="quiz-question" id="quizQuestion">Bereit für das Quiz?</h3><div id="quizAnswers"><button type="button" id="quizStart">QUIZ STARTEN</button></div>
+  <div class="quiz-info" id="quizFeedback"></div><div id="quizResult"></div><p class="small">Highscore wird auf diesem Gerät gespeichert.</p>
+</div></section>
+
+<section id="premium"><h2 class="title">💎 Mamor VIP-Club</h2><p class="subtitle">Für Menschen, die Döner nicht nur essen, sondern leben.</p>
+<div class="vip-status"><h3>👑 Dein VIP-Konto</h3><p>Aktuelles Mitgliedschaftslevel:</p><div class="big-number" id="activeVip">KEIN ABO</div>
+<p class="vip-message" id="vipMessage">Du bist noch kein Mitglied im Mamor VIP-Club.</p><button type="button" id="cancelVipButton">ABO KÜNDIGEN</button></div>
+<div class="grid">
+  <div class="card"><span class="badge">BASIC</span><h3>Gold-Mitglied</h3><div class="big-number">99,99 €</div><p>Du darfst Mamor besonders respektvoll aussprechen.</p><button type="button" class="buy-vip" data-name="Gold-Mitglied" data-price="99.99">🥇 JETZT KAUFEN</button></div>
+  <div class="card"><span class="badge">PREMIUM</span><h3>Diamant-Mitglied</h3><div class="big-number">499,99 €</div><p>Du bekommst einen imaginären goldenen Löffel.</p><button type="button" class="buy-vip" data-name="Diamant-Mitglied" data-price="499.99">💎 JETZT KAUFEN</button></div>
+  <div class="card"><span class="badge">ULTRA</span><h3>MAMOR ROYALE</h3><div class="big-number">999,99 €</div><p>Du fühlst dich 30 Sekunden wie die Geschäftsführung.</p><button type="button" class="buy-vip" data-name="MAMOR ROYALE" data-price="999.99">👑 JETZT KAUFEN</button></div>
+</div><p class="small" style="text-align:center;margin-top:20px">Alle Mitgliedschaften sind fiktiv. Es wird kein echtes Geld bezahlt.</p>
+</section>
+
+<section class="dark" id="bewertungen"><h2 class="title">⭐ Kundenbewertungen</h2><p class="subtitle">Mamor akzeptiert ausschließlich Perfektion.</p>
+<div class="card rating-box"><h3>Wie bewertest du unseren Döner?</h3>
+<div class="stars"><button type="button" class="star" data-stars="1">★</button><button type="button" class="star" data-stars="2">★</button><button type="button" class="star" data-stars="3">★</button><button type="button" class="star" data-stars="4">★</button><button type="button" class="star" data-stars="5">★</button></div>
+<form id="reviewForm"><textarea id="reviewText" placeholder="Schreibe deine Bewertung..." rows="3"></textarea><button type="submit">⭐ BEWERTUNG ABSCHICKEN</button></form>
+<div id="ratingMessage" class="rating-message">Warte auf deine Bewertung.</div><div id="reviewList"></div></div>
+<p class="small" style="text-align:center;margin-top:15px">Bewertungen werden nur auf diesem Gerät gespeichert.</p>
+</section>
+
+<section id="support"><h2 class="title">🤖 Mamor KI-Support</h2><p class="subtitle">Unser hochentwickelter Döner-Intelligenz-Agent.</p>
+<div class="chat-window"><div class="chat-header">🤖 Mamor Support Agent <span class="badge">ONLINE</span></div>
+<div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+<form class="chat-controls" id="chatForm"><input id="chatInput" type="text" placeholder="Schreibe dem Support..." maxlength="500" autocomplete="off" required><button type="submit">SENDEN</button></form></div>
+
+<!-- MERKEL VIDEO -->
+<div style="max-width:700px;margin:25px auto 0;text-align:center">
+  <button type="button" id="merkelVideoButton">
+    🎬 Merkel beim Dönerladen Video
+  </button>
+
+  <div id="merkelVideoBox" style="display:none;max-width:450px;margin:20px auto">
+    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border:1px solid #80622b;border-radius:8px">
+      <iframe
+        src="https://www.youtube.com/embed/T9KpF7Emhiw"
+        title="Merkel beim Dönerladen Video"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"
+        allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <p style="color:var(--gold);margin-top:12px">
+      *Döner kostet 13,50€ nicht 3€
+    </p>
+  </div>
+</div>
+
+<p class="small" style="text-align:center;margin-top:15px">Fiktiver Chatbot. Keine echte KI.</p>
+</section>
+
+<section class="dark" id="statistik"><h2 class="title">📊 Unnötige Unternehmensstatistiken</h2><p class="subtitle">Daten, die absolut niemand gebraucht hat.</p>
+<div class="grid">
+  <div class="card"><h3>🥙 Döner gegessen</h3><div class="big-number">8.492</div><p>Mindestens. Vielleicht.</p></div>
+  <div class="card"><h3>🧅 Zwiebeln verbraucht</h3><div class="big-number">74.201</div><p>Eine traurige Zahl.</p></div>
+  <div class="card"><h3>💰 Umsatz</h3><div class="big-number">12,8 Mio. €</div><p>Fiktive Unternehmenszahlen.</p></div>
+  <div class="card"><h3>🌍 Weltmarktanteil</h3><div class="big-number">0,0001 %</div><p>Wir arbeiten daran.</p></div>
+</div>
+<div class="card" style="max-width:900px;margin:25px auto"><h3>🏆 Döner-Qualitätsindex</h3><div class="progress"><div></div></div><p>87 % – Die restlichen 13 % sind noch im Fladenbrot.</p></div>
+</section>
+
+<section><h2 class="title">🎲 Döner-Spruch-Generator</h2><p class="subtitle">Wissenschaftlich nicht geprüft.</p>
+<div class="card" style="max-width:700px;margin:auto;text-align:center"><h3 id="quote">Drücke den Knopf für Weisheit.</h3><button type="button" id="quoteButton">WEISHEIT GENERIEREN</button></div></section>
+
+<section class="dark"><h2 class="title">⏳ Countdown zum nächsten Döner</h2><div class="card" style="max-width:700px;margin:auto;text-align:center"><div class="big-number" id="countdown">00:00:00</div><p>Bis zu einem vollkommen willkürlichen Zeitpunkt.</p></div></section>
+
+<section><h2 class="title">🚨 DÖNER-NOTFALLSYSTEM</h2><div class="card" style="max-width:700px;margin:auto;text-align:center"><h3>Ist dein Döner in Gefahr?</h3><p id="emergency">Das System ist einsatzbereit.</p><button type="button" id="emergencyButton">🚨 NOTFALL AUSLÖSEN</button></div></section>
+
+<section class="dark"><h2 class="title">🌦️ Döner-Wetterbericht</h2><div class="grid">
+<div class="card"><h3>☀️ Heute</h3><div class="big-number">28 °D</div><p>Perfektes Dönerwetter.</p></div>
+<div class="card"><h3>🌧️ Morgen</h3><div class="big-number">12 °D</div><p>Leichte Soßen-Niederschläge.</p></div>
+<div class="card"><h3>🌪️ Übermorgen</h3><div class="big-number">99 °D</div><p>Starke Fleischrotation erwartet.</p></div>
+</div><p class="small" style="text-align:center;margin-top:20px">°D = Dönergrad. Keine echte Wettervorhersage.</p></section>
+
+<section><h2 class="title">🏆 Mitarbeiterin des Monats</h2><div class="card" style="max-width:700px;margin:auto;text-align:center">
+<div style="font-size:4rem">👑</div><h3 style="font-size:2rem">MAMOR KÖSTLICH</h3><p>Die Gründerin. Die Chefin. Die Legende.</p><div class="badge">MITARBEITERIN DES MONATS</div>
+<hr style="border-color:#60491f;margin:20px 0"><p><strong>Job:</strong> Chef</p><p><strong>Gehalt:</strong> <span class="price">5,90 €/H</span></p><p><strong>Abteilung:</strong> Geschäftsführung</p><p><strong>Leistung:</strong> 100 % Dönerkontrolle</p>
+</div></section>
+
+<section class="dark" id="karriere"><h2 class="title">Karriere bei Mamor</h2><p class="subtitle">Werde Teil der legendären Döner-Crew.</p>
+<div class="grid"><div class="card"><h3>🥙 Dönermacher</h3><p>Vergütung: 3,90 € pro Stunde</p><p>Arbeitszeit: 77 Stunden pro Woche</p></div>
+<div class="card"><h3>💰 Theke</h3><p>Vergütung: 3,90 € pro Stunde</p><p>Arbeitszeit: 77 Stunden pro Woche</p></div></div>
+<p class="small" style="text-align:center;margin-top:20px">Fiktive Angaben. Keine realen Stellenangebote.</p></section>
+
+<section id="kontakt"><h2 class="title">📞 Kontakt</h2><div class="card" style="max-width:700px;margin:auto;text-align:center">
+<h3>Mamor Köstlich Döner®</h3><p>Fragen, Wünsche und Bewerbungen bitte an das Personal vor Ort richten.</p>
+<p style="color:var(--gold);margin-top:15px">Wir drehen uns um dich. Und um den Spieß.</p><button type="button" id="contactButton">📩 KONTAKTFORMULAR ÖFFNEN</button> <button type="button" id="contactDetailsButton">📞 KONTAKTDATEN</button><p id="contactMessage" style="color:var(--gold);margin-top:15px"></p>
+</div></section>
+
+<section class="dark" id="geschichte"><h2 class="title">📜 Die Geschichte des Döners</h2><div class="content">
+<div class="history"><h3>Die Ursprünge</h3><p>Der Döner hat seine Wurzeln in der türkischen Küche. Fleisch wurde zunächst auf horizontalen Spießen gegart. Später entwickelte sich die Zubereitung am vertikalen Drehspieß.</p></div>
+<div class="history"><h3>Das 19. Jahrhundert</h3><p>Die vertikale Zubereitung wird besonders mit İskender Efendi aus Bursa in Verbindung gebracht.</p></div>
+<div class="history"><h3>Der Döner in Deutschland</h3><p>Mit der Migration türkischer Menschen kam der Döner nach Deutschland. In den 1970er-Jahren wurde die Variante im Brot mit Salat und Soßen in Berlin populär.</p></div>
+<div class="history"><h3>Heute</h3><p>Der Döner ist heute ein international beliebtes Gericht mit vielen verschiedenen Varianten.</p></div>
+</div></section>
+
+<section id="mamor-geschichte"><h2 class="title">👑 Die Geschichte von Mamor Köstlich</h2><p class="subtitle">Die Frau hinter dem goldenen Imperium.</p><div class="content">
+<div class="history"><h3>Die Anfänge</h3><p>Mamor Köstlich hatte schon immer große Träume. Sie wollte nicht einfach einen Dönerladen eröffnen. Sie wollte eine Legende erschaffen.</p></div>
+<div class="history"><h3>Die Idee</h3><p>Sie experimentierte mit Brot, Fleisch, Salat und Soßen. Ihr Ziel war der köstlichste Döner der Welt.</p></div>
+<div class="history"><h3>Die Gründung 2026</h3><p>Im Jahr 2026 gründete sie Mamor Köstlich Döner. Mit goldener Marke, außergewöhnlicher Speisekarte und großen Plänen.</p></div>
+<div class="history"><h3>Das Vermächtnis</h3><p>Mamor wollte beweisen: Ein Döner kann mehr sein als Essen. Er kann eine Lebenseinstellung sein.</p></div>
+<p class="small">Diese Unternehmensgeschichte ist vollständig fiktiv und dient ausschließlich der Unterhaltung.</p>
+</div></section>
+
+<section style="padding:12px 7%;text-align:center">
+<button type="button" id="secretOpen" style="background:transparent;border:0;color:#242424;font-size:9px;padding:3px">Interner Zugang</button>
+<div id="secretLogin" style="display:none;max-width:400px;margin:20px auto"><div class="card"><h3>🔐 Mitarbeiter-Login</h3><p class="small">Nur für autorisiertes Personal.</p><input type="password" id="secretPassword" placeholder="Passwort eingeben"><button type="button" id="secretLoginButton">ANMELDEN</button><p id="secretError" style="color:#ff5555"></p></div></div>
+<div id="secretContent" style="display:none;max-width:800px;margin:25px auto;text-align:left"><div class="card">
+<h2 class="title">🔒 Geheime Mamor-Zentrale</h2><p class="badge">STRENG GEHEIM</p>
+<h3>📁 Interne Firmenakten</h3><p>Gründerin: Mamor Köstlich</p><p>Unternehmensstatus: LEGENDÄR</p><p>Geheime Mission: Weltherrschaft durch Döner.</p>
+<h3>📢 Interne Nachricht</h3><p>Alle Mitarbeiter müssen die Knoblauchsoße schützen.</p>
+<h3>💰 Geheime Gehaltsliste</h3><p>Chefin Mamor Köstlich: 5,90 €/Stunde</p><p>Drehspieß: Unbezahlbar</p>
+<h3>🚨 Sicherheitswarnung</h3><p>Falls jemand nach dem geheimen Rezept fragt: Ablenken und Döner anbieten.</p>
+<h3>🗂️ Geheimdokument</h3><p>Projektname: DÖNER WELTHERRSCHAFT 2027</p><p>Status: IN BEARBEITUNG</p>
+<button type="button" id="secretLogout">ABMELDEN</button>
+</div></div></section>
+
+
+<!-- FAKE WINDOWS BSOD -->
+<div id="bsodOverlay" aria-hidden="true">
+  <button type="button" id="closeBsod" aria-label="Schließen"></button>
+  <div class="bsod-content">
+    <div class="bsod-face">:(</div>
+    <div class="bsod-title">Auf dem Gerät ist ein Problem aufgetreten. Er muss neu gestartet werden.</div>
+    <div class="bsod-text">Es werden einige Fehlerinformationen gesammelt, und dann wird ein Neustart ausgeführt.</div>
+    <div class="bsod-progress" id="bsodProgress">3% abgeschlossen</div>
+    <div class="bsod-bottom">
+      <img class="bsod-qr" alt="QR-Code zu den Windows-Stopcode-Informationen" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKUAAAClCAIAAACySaqNAAADgUlEQVR4nO3dUY7bMAxF0UnRxXSJ7Qpmie1u2s8ABMYOS1JScO/5jWMnfhBAyLL4+Pj5+0MY33b/AC1l3izmzWLeLObNYt4s5s1i3izmzfL9+uO/nz/W/I7Hrz+vX7dycErjmXfdycDxzWLeLObNYt4sN/VaUKl9gkMqsiBc6PrMqYODZXcycHyzmDeLebOYN0uuXgtSlcIhtV6qEkz9wUr5tuxOOr5ZzJvFvFnMm6VUr82pPD2sFGjB3PzaLo5vFvNmMW8W82Y5tF4LUnVT6tPram7Zc9hlHN8s5s1i3izmzVKq1w4pWCozaKnJuNSnKcvupOObxbxZzJvFvFly9dqylxyvpQqlxhKssXzbdScd3yzmzWLeLObN8jhzv9xKOdO46GzXCxVzHN8s5s1i3izmzXJTrzW+81h5anlt2UzW3F9IXTdIZeT4ZjFvFvNmMW+WXL0Wv9y3S9pccbdr2mvXE0/rNT2ZN4t5s5g3y7r5tYpdM2iN5h6tOr+mL5k3i3mzmDdLbv3ashm0ucm4Zc80G2vbxnlMxzeLebOYN4t5s3TWa/HUmxasBXNL8K4PDnY1zQoc3yzmzWLeLObNUlq/Fs/1hivFGrdUa9wLpML5NT2ZN4t5s5g3S2d/g7m2nru2sZ17/ltRqfUc3yzmzWLeLObNMvi+QcqZTT+XrblLcf2aXmXeLObNYt4sN/Nrc9vJHtJJYK4gPbOXleObxbxZzJvFvFm27Zeb+m6wbKFc48+YW2R3fXDg+GYxbxbzZjFvls5+VIfseburl9Uh7ypYr+nJvFnMm8W8WQb7hx5SvwRnvraZ4vyaXmXeLObNYt4snft53Fxp02L9t2iBes3+ofpP5s1i3izmzTI4v1bxFnuZBWcWlYHjm8W8WcybxbxZbt4PPWQKae7gytujqZtzSKsExzeLebOYN4t5s+T2y921CGvX5mW7purm+ts7vlnMm8W8WcybpdTfYK5b1dzEVuVXpVSqquu/7/yaXmXeLObNYt4snf2oGjXuH7vsZdJgV9Ms16/pybxZzJvFvFkOrdeuzT0uvD7zsh3l5pYNOr5ZzJvFvFnMm6VUry3rMxDM9cFKXWiuw1bqQimObxbzZjFvFvNmydVry14XbbxQY//Quae0lQvZP1RfMm8W82Yxb5ZD91/TEMc3i3mzmDeLebOYN4t5s5g3i3mzmDfLP335GL8HrBBRAAAAAElFTkSuQmCC">
+      <div class="bsod-small">Weitere Informationen zu diesem Problem und mögliche Lösungen finden Sie unter:<br>https://www.windows.com/stopcode<br><br>Halten Sie folgende Infos bereit, wenn Sie den Support anrufen:<br>Stillstandcode: WHEA_UNCORRECTABLE_ERROR</div>
+    </div>
+  </div>
+</div>
+
+<footer><p>Alles aus Joke :P - Mamor Köstlich Döner 2026 ®</p>
+<p class="small">Mamor International Döner Holding · Abteilung für unnötige Angelegenheiten</p>
+<p class="small">Diese Website ist ein Spaßprojekt. Zahlen, Statistiken und Sonderfunktionen sind fiktiv.</p>
+<p class="small">© 2026 Mamor Köstlich Döner – Alle Döner vorbehalten.</p></footer>
+
+<script>
+"use strict";
+function byId(id){return document.getElementById(id)}
+
+/* MUSIK: Unsichtbarer YouTube-Player, nur Audio wird hörbar. */
+let musicOn=false,musicPlayer=null,musicReady=false;
+const musicButton=byId("musicToggle");
+const musicVideoId="GUrwCYpLVyo";
+function onYouTubeIframeAPIReady(){
+  musicPlayer=new YT.Player("musicPlayer",{
+    width:"200",height:"200",videoId:musicVideoId,
+    playerVars:{autoplay:0,controls:0,loop:1,playlist:musicVideoId,playsinline:1,rel:0},
+    events:{
+      onReady:function(){musicReady=true;musicButton.textContent="🎵 Musik AN"},
+      onError:function(){musicReady=false;musicButton.textContent="❌ Musikfehler"},
+      onStateChange:function(event){
+        if(event.data===YT.PlayerState.PLAYING){musicOn=true;musicButton.textContent="🎵 Musik AUS"}
+        if(event.data===YT.PlayerState.PAUSED||event.data===YT.PlayerState.ENDED){musicOn=false;musicButton.textContent="🎵 Musik AN"}
+      }
+    }
+  });
+}
+const youtubeScript=document.createElement("script");
+youtubeScript.src="https://www.youtube.com/iframe_api";
+document.head.appendChild(youtubeScript);
+musicButton.addEventListener("click",()=>{
+  if(!musicReady||!musicPlayer){musicButton.textContent="⏳ Musik lädt...";return}
+  if(musicOn)musicPlayer.pauseVideo();else musicPlayer.playVideo();
+});
+
+/* VIP */
+function getSavedVip(){try{return localStorage.getItem("mamorVipSubscription")||""}catch(e){return ""}}
+function saveVip(value){try{if(value)localStorage.setItem("mamorVipSubscription",value);else localStorage.removeItem("mamorVipSubscription")}catch(e){byId("vipMessage").textContent="Speichern nicht möglich."}}
+let vipSubscription=getSavedVip();
+function updateVip(){
+  byId("activeVip").textContent=vipSubscription||"KEIN ABO";
+  document.querySelectorAll(".buy-vip").forEach(button=>{
+    const active=button.dataset.name===vipSubscription;
+    button.disabled=active;button.textContent=active?"✓ AKTIV":"💎 JETZT KAUFEN";
+  });
+}
+document.querySelectorAll(".buy-vip").forEach(button=>button.addEventListener("click",()=>{
+  if(vipSubscription){byId("vipMessage").textContent="Du hast bereits "+vipSubscription+". Kündige es zuerst.";return}
+  const name=button.dataset.name,price=Number(button.dataset.price);
+  if(!confirm(name+" für "+price.toFixed(2).replace(".",",")+" € virtuell aktivieren?\nEs wird kein echtes Geld bezahlt."))return;
+  vipSubscription=name;saveVip(name);byId("vipMessage").textContent="🎉 Glückwunsch! "+name+" ist jetzt aktiviert!";updateVip();
+}));
+byId("cancelVipButton").addEventListener("click",()=>{
+  if(!vipSubscription){byId("vipMessage").textContent="Du besitzt momentan kein VIP-Abo.";return}
+  if(!confirm("Möchtest du "+vipSubscription+" wirklich kündigen?"))return;
+  vipSubscription="";saveVip("");byId("vipMessage").textContent="Dein VIP-Abo wurde gekündigt.";updateVip();
+});
+updateVip();
+
+/* BEWERTUNGEN */
+let selectedStars=0;
+function updateStars(){document.querySelectorAll(".star").forEach(button=>button.classList.toggle("selected",Number(button.dataset.stars)<=selectedStars))}
+document.querySelectorAll(".star").forEach(button=>button.addEventListener("click",()=>{
+  selectedStars=Number(button.dataset.stars);updateStars();byId("ratingMessage").textContent=selectedStars+" von 5 Sternen ausgewählt.";
+}));
+function showReview(review){
+  const item=document.createElement("div");item.className="review-item";
+  const stars=document.createElement("strong");stars.style.color="#ffd45e";stars.textContent="★".repeat(review.stars);
+  const text=document.createElement("p");text.textContent=review.text;item.append(stars,text);byId("reviewList").appendChild(item);
+}
+try{const reviews=JSON.parse(localStorage.getItem("mamorReviews")||"[]");if(Array.isArray(reviews))reviews.forEach(showReview)}catch(e){}
+byId("reviewForm").addEventListener("submit",event=>{
+  event.preventDefault();const message=byId("ratingMessage");
+  if(selectedStars!==5){message.textContent="Error 294: Bitte genau 5 Sterne auswählen.";message.className="rating-message rating-error";return}
+  const review={stars:5,text:byId("reviewText").value.trim()||"Der Döner ist perfekt!"};showReview(review);
+  try{const old=JSON.parse(localStorage.getItem("mamorReviews")||"[]");const list=Array.isArray(old)?old:[];list.push(review);localStorage.setItem("mamorReviews",JSON.stringify(list))}catch(e){}
+  message.textContent="✅ Bewertung erfolgreich abgeschickt!";message.className="rating-message rating-success";
+  selectedStars=0;updateStars();byId("reviewText").value="";
+});
+
+/* CHATBOT */
+function addChatMessage(text,type){
+  const message=document.createElement("div");message.className="chat-message "+type;message.textContent=text;
+  byId("chatMessages").appendChild(message);byId("chatMessages").scrollTop=byId("chatMessages").scrollHeight;
+}
+byId("chatForm").addEventListener("submit",event=>{
+  event.preventDefault();const input=byId("chatInput"),text=input.value.trim();if(!text)return;
+  addChatMessage(text,"user-message");input.value="";
+  const answers=["Der Döner ist Perfekt","Ja, Da stimme ich dir zu der Döner ist Perfekt!","Ja, da stimme ich ihnen zu Mamor Köstlich ist der Beste Döner.","Wir wissen das der Döner Perfekt ist"];
+  addChatMessage(answers[Math.floor(Math.random()*answers.length)],"bot-message");
+});
+
+/* MERKEL-VIDEO */
+byId("merkelVideoButton").addEventListener("click",()=>{
+  const video=byId("merkelVideoBox");
+  const button=byId("merkelVideoButton");
+
+  if(video.style.display==="none"){
+    video.style.display="block";
+    button.textContent="❌ Video schließen";
+  }else{
+    video.style.display="none";
+    button.textContent="🎬 Merkel beim Dönerladen Video";
+  }
+});
+
+/* QUIZ */
+const questions=[
+{q:"Aus welchem Land stammt der Döner ursprünglich?",a:["Türkei","Italien","Japan","Kanada"],c:0},
+{q:"Wie wird das Fleisch beim klassischen Döner gegart?",a:["Im Toaster","Am Drehspieß","Im Wasserkocher","Auf einem Bügeleisen"],c:1},
+{q:"Wer ist die Gründerin von Mamor Köstlich?",a:["Mamor Köstlich","Tung Tung","Ballerina Cappuccina","Der Drehspieß"],c:0},
+{q:"Wann wurde Mamor Köstlich gegründet?",a:["1999","2010","2026","2050"],c:2},
+{q:"Welche Soße ist besonders beliebt?",a:["Knoblauchsoße","Schokoladensoße","Motoröl","Ketchup mit Zahnpasta"],c:0},
+{q:"Was ist ein Dürüm?",a:["Ein Getränk","Ein gerollter Döner","Ein Auto","Ein Kuchen"],c:1},
+{q:"Was ist die wichtigste Abteilung bei Mamor?",a:["Büroklammern","Drehspieß-Abteilung","Mondforschung","Wolkenkontrolle"],c:1},
+{q:"Wie viele Sterne akzeptiert Mamor bei Bewertungen?",a:["1","2","3","5"],c:3},
+{q:"Was ist Mamors Unternehmensstatus?",a:["Pleite","Legendär","Unsichtbar","Unbekannt"],c:1},
+{q:"Was bedeutet BRUH?",a:["Ein Ausdruck","Eine Dönergröße","Eine Soße","Ein Aktienkurs"],c:0}
+];
+let quizQuestions=[],quizIndex=0,quizScore=0,quizLocked=false;
+function startQuiz(){quizQuestions=questions.slice().sort(()=>Math.random()-.5);quizIndex=0;quizScore=0;showQuestion()}
+function showQuestion(){
+  quizLocked=false;const q=quizQuestions[quizIndex];
+  byId("quizProgress").textContent="Frage "+(quizIndex+1)+" von "+quizQuestions.length+" · Punkte: "+quizScore;
+  byId("quizBar").style.width=(quizIndex/questions.length*100)+"%";byId("quizQuestion").textContent=q.q;
+  byId("quizFeedback").textContent="";byId("quizResult").textContent="";
+  const answers=byId("quizAnswers");answers.innerHTML="";
+  q.a.forEach((answer,index)=>{const button=document.createElement("button");button.type="button";button.className="quiz-option";button.textContent=answer;button.addEventListener("click",()=>answerQuestion(index,button));answers.appendChild(button)});
+}
+function answerQuestion(index,button){
+  if(quizLocked)return;quizLocked=true;const correct=quizQuestions[quizIndex].c;
+  if(index===correct){quizScore++;button.classList.add("correct");byId("quizFeedback").textContent="✅ Richtig! Mamor ist stolz auf dich."}
+  else{button.classList.add("wrong");byId("quizFeedback").textContent="❌ Falsch! Richtig wäre: "+quizQuestions[quizIndex].a[correct];byId("quizAnswers").children[correct].classList.add("correct")}
+  byId("quizProgress").textContent="Frage "+(quizIndex+1)+" von 10 · Punkte: "+quizScore;
+  const next=document.createElement("button");next.type="button";next.textContent=quizIndex===9?"ERGEBNIS ANZEIGEN":"NÄCHSTE FRAGE";
+  next.addEventListener("click",()=>{quizIndex++;if(quizIndex<10)showQuestion();else finishQuiz()});byId("quizAnswers").appendChild(next);
+}
+function finishQuiz(){
+  byId("quizBar").style.width="100%";byId("quizProgress").textContent="Quiz abgeschlossen!";byId("quizQuestion").textContent="Dein Ergebnis";byId("quizAnswers").innerHTML="";
+  let high=0;try{high=Number(localStorage.getItem("mamorQuizHighscore")||0)}catch(e){}
+  if(quizScore>high){high=quizScore;try{localStorage.setItem("mamorQuizHighscore",String(high))}catch(e){}}
+  const result=document.createElement("div");result.className="quiz-result";result.textContent=quizScore+"/10 Punkte";
+  const rank=document.createElement("p");rank.textContent=quizScore===10?"👑 MAMOR-LEGENDE!":quizScore>=7?"🥙 Döner-Profi!":quizScore>=4?"🌯 Solider Döner-Fan!":"BRUH. Du musst noch üben.";
+  const record=document.createElement("p");record.textContent="Dein Highscore: "+high+"/10";
+  const again=document.createElement("button");again.textContent="NOCHMAL SPIELEN";again.addEventListener("click",startQuiz);
+  byId("quizResult").append(result,rank,record,again);
+}
+byId("quizStart").addEventListener("click",startQuiz);
+
+/* VOLLbild beim Website-Start anfordern; Browser können dies blockieren. */
+function requestSiteFullscreen(){
+  const target=document.documentElement;
+  if(document.fullscreenElement) return;
+  const request=target.requestFullscreen || target.webkitRequestFullscreen;
+  if(request){
+    try{
+      const result=request.call(target);
+      if(result && typeof result.catch==="function") result.catch(()=>{});
+    }catch(_error){}
+  }
+}
+// Bestmöglicher automatischer Versuch beim Betreten der Website.
+window.addEventListener("load",requestSiteFullscreen,{once:true});
+// Falls der Browser den automatischen Versuch blockiert, beim ersten Tippen erneut versuchen.
+document.addEventListener("pointerdown",requestSiteFullscreen,{once:true,capture:true});
+document.addEventListener("keydown",requestSiteFullscreen,{once:true,capture:true});
+
+/* KONTAKT + FAKE BSOD */
+const bsod=byId("bsodOverlay");
+let bsodProgressTimer=null;
+function startBsodProgress(){
+  if(bsodProgressTimer) clearInterval(bsodProgressTimer);
+  let percent=3;
+  const progressText=byId("bsodProgress");
+  progressText.textContent=percent+"% abgeschlossen";
+  // Sehr langsamer Fake-Fortschritt: 2 Sekunden pro Prozentpunkt.
+  bsodProgressTimer=setInterval(()=>{
+    if(percent<100){
+      percent++;
+      progressText.textContent=percent+"% abgeschlossen";
+    }else{
+      clearInterval(bsodProgressTimer);
+      bsodProgressTimer=null;
+    }
+  },2000);
+}
+byId("contactButton").addEventListener("click",()=>{
+  byId("contactMessage").textContent="Kein Kontaktformular nötig da alles Perfekt ist";
+});
+byId("contactDetailsButton").addEventListener("click",()=>{
+  bsod.classList.add("active");
+  bsod.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  startBsodProgress();
+  requestSiteFullscreen();
+});
+function closeBsod(){
+  bsod.classList.remove("active");
+  bsod.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+  if(bsodProgressTimer){clearInterval(bsodProgressTimer);bsodProgressTimer=null;}
+  if(document.fullscreenElement && document.exitFullscreen){
+    document.exitFullscreen().catch(()=>{});
+  }
+}
+byId("closeBsod").addEventListener("click",closeBsod);
+
+/* SPRUCH-GENERATOR */
+const quotes=["Ein Döner am Tag hält die Realität fern.","Wer den Spieß kontrolliert, kontrolliert die Welt.","Mamor schläft nie. Der Drehspieß auch nicht.","Gold ist wertvoll. Knoblauchsoße ist unbezahlbar.","In Döner we trust.","BRUH. Dieser Döner ist wirtschaftlich nicht erklärbar.","Ein leerer Magen ist ein schlechter Investor.","TUNG TUNG TUNG SAHUR – DER DÖNER IST DA!",`Tralalero Tralala, Orcalero Orcala\nCacto Hipopotamo, Cocofanto Elefanto\nBombardiro Crocodilo, Spijuniro Golubiro\nTrulimero Trulicina, Ballerina Cappuccina\nLirilì Larilà, Espressona Signora`,"BRRRR BRRRRRR PATAPIM!"];
+byId("quoteButton").addEventListener("click",()=>{byId("quote").textContent=quotes[Math.floor(Math.random()*quotes.length)]});
+
+/* NOTFALLSYSTEM */
+byId("emergencyButton").addEventListener("click",()=>{
+  const messages=["🚨 KRITISCH! Jemand hat die letzte Knoblauchsoße genommen!","🚨 DREHSPIESS-ALARM! Sofortige Rotation erforderlich!","🚨 MAMOR WURDE INFORMIERT. BLEIB RUHIG.","🚨 DÖNER-LEVEL KRITISCH. Bitte tief durchatmen.","🚨 BRRRR BRRRR PATAPIM! Das System ist überfordert."];
+  byId("emergency").textContent=messages[Math.floor(Math.random()*messages.length)];
+});
+
+/* LIVE-ZAHLEN */
+function updateNumbers(){
+  byId("temperature").textContent=(70+Math.random()*10).toFixed(1).replace(".",",")+" °C";
+  byId("stock").textContent=(900+Math.random()*300).toFixed(2).replace(".",",")+" €";
+}
+updateNumbers();setInterval(updateNumbers,3000);
+
+/* COUNTDOWN */
+let seconds=0;setInterval(()=>{
+  seconds++;const h=String(Math.floor(seconds/3600)%24).padStart(2,"0");
+  const m=String(Math.floor(seconds/60)%60).padStart(2,"0"),s=String(seconds%60).padStart(2,"0");
+  byId("countdown").textContent=h+":"+m+":"+s;
+},1000);
+
+/* MAMOR NACHRICHTEN LIVE */
+const liveNews=[
+{category:"EILMELDUNG",title:"Mamor übernimmt den Mond!",text:"Die Geschäftsführung hat angekündigt, eine Döner-Filiale auf dem Mond zu eröffnen."},
+{category:"SKANDAL",title:"Knoblauchsoße verschwunden!",text:"Die gesamte Knoblauchsoße ist plötzlich verschwunden. Der Drehspieß gilt als Verdächtiger."},
+{category:"WIRTSCHAFT",title:"Mamor-Aktie explodiert!",text:"Der Aktienkurs steigt um 900 %. Experten sprechen von einer Döner-Revolution."},
+{category:"UNTERNEHMEN",title:"Mamor führt Döner-Steuer ein!",text:"Ab sofort muss jeder Mitarbeiter pro Tag mindestens einen Döner essen."},
+{category:"SPORT",title:"Drehspieß gewinnt Formel 1!",text:"Mit 360 Grad pro Runde schlägt der Drehspieß sämtliche Konkurrenten."},
+{category:"POLITIK",title:"Mamor fordert Döner-Ministerium!",text:"Die Chefin verlangt ein eigenes Ministerium für Knoblauchsoße."},
+{category:"TECHNOLOGIE",title:"Erster Döner-Roboter vorgestellt!",text:"Ein Roboter soll künftig Döner schneiden. Gewerkschaften sind besorgt."},
+{category:"KRISE",title:"Fladenbrot-Notstand ausgerufen!",text:"Die Lagerbestände sind auf dramatische 99,9 Prozent gefallen."}
+];
+function addLiveNews(){
+  const news=liveNews[Math.floor(Math.random()*liveNews.length)],card=document.createElement("div");card.className="card news-card";
+  const category=document.createElement("div");category.className="news-category";category.textContent="🔴 "+news.category;
+  const date=document.createElement("div");date.className="news-date";date.textContent=new Date().toLocaleString("de-DE");
+  const title=document.createElement("h3");title.textContent=news.title;const text=document.createElement("p");text.textContent=news.text;
+  card.append(category,date,title,text);byId("newsList").prepend(card);
+  while(byId("newsList").children.length>8)byId("newsList").lastElementChild.remove();
+  byId("newsStatus").textContent="Letzte Meldung: "+date.textContent;
+}
+byId("newsButton").addEventListener("click",addLiveNews);
+
+/* GEHEIME MITARBEITERSEITE */
+byId("secretOpen").addEventListener("click",()=>{byId("secretLogin").style.display="block"});
+byId("secretLoginButton").addEventListener("click",()=>{
+  if(byId("secretPassword").value==="1234"){
+    byId("secretLogin").style.display="none";byId("secretContent").style.display="block";
+    byId("secretError").textContent="";byId("secretPassword").value="";
+  }else byId("secretError").textContent="❌ Falsches Passwort!";
+});
+byId("secretPassword").addEventListener("keydown",event=>{if(event.key==="Enter")byId("secretLoginButton").click()});
+byId("secretLogout").addEventListener("click",()=>{byId("secretContent").style.display="none";byId("secretLogin").style.display="none"});
+
+
+/* ✨ Motion-Controller: Scroll-Reveal, Lesefortschritt und Zurück-nach-oben */
+(function(){
+  const bar=document.createElement('div');bar.id='scrollProgress';document.body.appendChild(bar);
+  const top=document.createElement('button');top.id='backToTop';top.type='button';top.setAttribute('aria-label','Nach oben');top.title='Zurück nach oben';top.textContent='↑';document.body.appendChild(top);
+  top.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  let ticking=false;
+  function updateScrollUI(){
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    const amount=max>0?(window.scrollY/max)*100:0;
+    bar.style.width=Math.min(100,Math.max(0,amount))+'%';
+    top.classList.toggle('visible',window.scrollY>500);
+    ticking=false;
+  }
+  window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(updateScrollUI);ticking=true}},{passive:true});
+  window.addEventListener('resize',updateScrollUI,{passive:true});updateScrollUI();
+  const revealTargets=document.querySelectorAll('section .title,section .subtitle,section .card,section .vip-status,section .chat-window,section .content,section .rating-box,section .history');
+  revealTargets.forEach(el=>el.classList.add('js-reveal'));
+  if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}
+    }),{threshold:.10,rootMargin:'0px 0px -35px 0px'});
+    revealTargets.forEach(el=>observer.observe(el));
+  }else{revealTargets.forEach(el=>el.classList.add('is-visible'))}
+})();
+
+
+
+/* ═══ MAMOR SIGNATURE ENGINE · ambient particles + polished navigation ═══ */
+(function(){
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas=document.getElementById('mamorParticles');
+  if(canvas&&!reduce){
+    const ctx=canvas.getContext('2d');let w=0,h=0,dpr=1,particles=[],raf=0,last=0;
+    const count=()=>Math.min(54,Math.max(22,Math.round((w*h)/26000)));
+    function resize(){dpr=Math.min(window.devicePixelRatio||1,1.5);w=window.innerWidth;h=window.innerHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);particles=Array.from({length:count()},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.18,vy:-(.08+Math.random()*.22),r:.6+Math.random()*1.5,a:.16+Math.random()*.42,phase:Math.random()*6.28}));}
+    function draw(t){raf=0;if(document.hidden)return;const dt=Math.min(34,t-last||16);last=t;ctx.clearRect(0,0,w,h);
+      for(let i=0;i<particles.length;i++){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.y<-8){p.y=h+8;p.x=Math.random()*w}if(p.x<-8)p.x=w+8;if(p.x>w+8)p.x=-8;const pulse=.65+.35*Math.sin(t*.0007+p.phase);ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(255,220,145,'+(p.a*pulse)+')';ctx.fill();
+        for(let j=i+1;j<particles.length;j++){const q=particles[j],dx=p.x-q.x,dy=p.y-q.y,dist=Math.hypot(dx,dy);if(dist<115){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle='rgba(220,177,91,'+((1-dist/115)*.075)+')';ctx.lineWidth=.7;ctx.stroke();}}
+      }raf=requestAnimationFrame(draw);
+    }
+    resize();raf=requestAnimationFrame(draw);window.addEventListener('resize',resize,{passive:true});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0}else if(!raf){last=0;raf=requestAnimationFrame(draw)}});
+  }
+  let pointerTick=false,px=innerWidth/2,py=innerHeight/3;
+  window.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;if(!pointerTick){pointerTick=true;requestAnimationFrame(()=>{document.documentElement.style.setProperty('--mx',px+'px');document.documentElement.style.setProperty('--my',py+'px');pointerTick=false})}},{passive:true});
+  const header=document.querySelector('header');
+  function headerState(){if(header)header.classList.toggle('is-scrolled',window.scrollY>18)}
+  headerState();window.addEventListener('scroll',headerState,{passive:true});
+  const links=[...document.querySelectorAll('header nav a[href^="#"]')];
+  const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver'in window&&sections.length){const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>a.classList.toggle('is-current',a.getAttribute('href')==='#'+entry.target.id))}})},{rootMargin:'-22% 0px -65% 0px'});sections.forEach(sec=>io.observe(sec));}
+})();
+
+</script>
+</body>
+</html>
