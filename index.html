@@ -501,6 +501,24 @@ byId("quizResult").append(result,rank,record,again);
 }
 byId("quizStart").addEventListener("click",startQuiz);
 
+/* BEIM ERSTEN KLICK VOLLbild ANFORDERN */
+let fullscreenAttempted=false;
+document.addEventListener("click",()=>{
+  if(fullscreenAttempted)return;
+  fullscreenAttempted=true;
+  const page=document.documentElement;
+  try{
+    if(page.requestFullscreen){
+      const result=page.requestFullscreen();
+      if(result&&typeof result.catch==="function")result.catch(()=>{});
+    }else if(page.webkitRequestFullscreen){
+      page.webkitRequestFullscreen();
+    }
+  }catch(error){
+    /* Browser oder Gerät unterstützt Vollbild möglicherweise nicht. */
+  }
+},{capture:true});
+
 /* BSOD – SOFORTIGES ÖFFNEN UND SCHLIESSEN */
 const bsod=byId("bsodOverlay");
 const bsodFace=bsod.querySelector(".bsod-face");
