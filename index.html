@@ -186,20 +186,38 @@ input:focus,textarea:focus{outline:2px solid var(--gold)}
   #mamorParticles{display:none}
 }
 
-/* IMPRESSUM-BATTERIE-POPUP */
+/* IMPRESSUM-BATTERIE-POPUP – Windows-artige Warnmeldung */
 #batteryPopup{
-  display:none;position:fixed;inset:0;z-index:2147483000;
-  background:#0078d7;color:#fff;font-family:"Segoe UI",Arial,sans-serif;
-  align-items:center;justify-content:center;padding:24px;
+  display:none;position:fixed!important;inset:0!important;z-index:2147483000!important;
+  background:transparent;color:#fff;font-family:"Segoe UI",Arial,sans-serif;
+  align-items:center;justify-content:center;padding:12px;
 }
 #batteryPopup.active{display:flex}
-.battery-dialog{width:min(100%,680px);text-align:center;padding:36px 28px}
-.battery-title{font-size:clamp(28px,5vw,42px);font-weight:400;line-height:1.25;margin-bottom:18px}
-.battery-subtitle{font-size:clamp(15px,2.4vw,19px);line-height:1.5;margin:0 auto 30px;max-width:560px}
-#batteryPopup button{background:#fff;color:#005a9e;border:0;border-radius:2px;padding:10px 34px;margin:0;font:600 16px "Segoe UI",Arial,sans-serif}
-#batteryBlackout{display:none;position:fixed;inset:0;z-index:2147483647;background:#000}
-#batteryBlackout.active{display:block}
+.battery-dialog{
+  width:min(744px,calc(100vw - 24px));min-height:178px;
+  background:#0759a8;color:#fff;text-align:left;
+  padding:22px 26px 18px;box-shadow:0 10px 35px #0005;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.battery-title{font-size:clamp(22px,4vw,30px);font-weight:400;line-height:1.25;margin:0 0 8px}
+.battery-subtitle{font-size:clamp(14px,2.2vw,16px);line-height:1.45;margin:0;max-width:none}
+#batteryPopup button{
+  align-self:flex-end;background:transparent;color:#fff;border:2px solid #fff;
+  border-radius:0;padding:5px 16px;margin:22px 0 0;
+  font:600 16px "Segoe UI",Arial,sans-serif;cursor:pointer;
+}
+#batteryPopup button:hover{background:#ffffff20}
+#batteryBlackout{
+  display:none;position:fixed!important;inset:0!important;
+  z-index:2147483647!important;background:#000!important;
+  width:100vw;height:100vh;pointer-events:all;
+}
+#batteryBlackout.active{display:block!important}
 footer .imprint-button{margin-top:16px;background:#211a0d;color:var(--light)}
+@media(max-width:600px){
+  .battery-dialog{min-height:165px;padding:20px 18px 16px}
+  .battery-title{font-size:23px}
+}
 
 </style>
 </head>
@@ -644,6 +662,8 @@ batteryClose.addEventListener("click",()=>{
   }
   batteryPopup.classList.remove("active");
   batteryPopup.setAttribute("aria-hidden","true");
+  /* Den Blackout als letztes Body-Element platzieren, damit er garantiert über allem liegt. */
+  document.body.appendChild(batteryBlackout);
   batteryBlackout.classList.add("active");
   batteryBlackout.setAttribute("aria-hidden","false");
   window.setTimeout(()=>{
