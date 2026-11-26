@@ -185,6 +185,22 @@ input:focus,textarea:focus{outline:2px solid var(--gold)}
   .js-reveal{opacity:1;transform:none;filter:none}
   #mamorParticles{display:none}
 }
+
+/* IMPRESSUM-BATTERIE-POPUP */
+#batteryPopup{
+  display:none;position:fixed;inset:0;z-index:2147483000;
+  background:#0078d7;color:#fff;font-family:"Segoe UI",Arial,sans-serif;
+  align-items:center;justify-content:center;padding:24px;
+}
+#batteryPopup.active{display:flex}
+.battery-dialog{width:min(100%,680px);text-align:center;padding:36px 28px}
+.battery-title{font-size:clamp(28px,5vw,42px);font-weight:400;line-height:1.25;margin-bottom:18px}
+.battery-subtitle{font-size:clamp(15px,2.4vw,19px);line-height:1.5;margin:0 auto 30px;max-width:560px}
+#batteryPopup button{background:#fff;color:#005a9e;border:0;border-radius:2px;padding:10px 34px;margin:0;font:600 16px "Segoe UI",Arial,sans-serif}
+#batteryBlackout{display:none;position:fixed;inset:0;z-index:2147483647;background:#000}
+#batteryBlackout.active{display:block}
+footer .imprint-button{margin-top:16px;background:#211a0d;color:var(--light)}
+
 </style>
 </head>
 <body>
@@ -370,7 +386,16 @@ input:focus,textarea:focus{outline:2px solid var(--gold)}
 <footer><p>Alles aus Joke :P - Mamor Köstlich Döner 2026 ®</p>
 <p class="small">Mamor International Döner Holding · Abteilung für unnötige Angelegenheiten</p>
 <p class="small">Diese Website ist ein Spaßprojekt. Zahlen, Statistiken und Sonderfunktionen sind fiktiv.</p>
-<p class="small">© 2026 Mamor Köstlich Döner – Alle Döner vorbehalten.</p></footer>
+<p class="small">© 2026 Mamor Köstlich Döner – Alle Döner vorbehalten.</p><button type="button" class="imprint-button" id="imprintButton">Impressum</button></footer>
+
+<div id="batteryPopup" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="batteryTitle">
+  <div class="battery-dialog">
+    <div class="battery-title" id="batteryTitle">Der Akkustand ist Niedrig</div>
+    <p class="battery-subtitle" id="batterySubtitle">Schließen Sie den Computer bald an das Stromnetz an.</p>
+    <button type="button" id="batteryClose">Schließen</button>
+  </div>
+</div>
+<div id="batteryBlackout" aria-hidden="true"></div>
 
 <script>
 "use strict";
@@ -586,6 +611,45 @@ byId("contactDetailsButton").addEventListener("click",openBsod);
 byId("closeBsod").addEventListener("click",closeBsod);
 document.addEventListener("keydown",event=>{
 if(event.key==="Escape"&&bsod.classList.contains("active"))closeBsod();
+});
+
+
+
+/* IMPRESSUM: DREISTUFIGE AKKU-WARNUNG */
+const batteryPopup=byId("batteryPopup");
+const batteryTitle=byId("batteryTitle");
+const batterySubtitle=byId("batterySubtitle");
+const batteryClose=byId("batteryClose");
+const batteryBlackout=byId("batteryBlackout");
+let batteryStage=0;
+byId("imprintButton").addEventListener("click",()=>{
+  batteryStage=0;
+  batteryTitle.textContent="Der Akkustand ist Niedrig";
+  batterySubtitle.textContent="Schließen Sie den Computer bald an das Stromnetz an.";
+  batteryPopup.classList.add("active");
+  batteryPopup.setAttribute("aria-hidden","false");
+});
+batteryClose.addEventListener("click",()=>{
+  if(batteryStage===0){
+    batteryStage=1;
+    batteryTitle.textContent="Der Akkustand ist sehr Niedrig";
+    batterySubtitle.textContent="Schließen Sie den Computer jetzt an das Stromnetz an.";
+    return;
+  }
+  if(batteryStage===1){
+    batteryStage=2;
+    batteryTitle.textContent="Der Akkustand ist Katastrophal niedrig";
+    batterySubtitle.textContent="Schließen Sie den Computer SOFORT an das Stromnetz an sonst explodiert er!";
+    return;
+  }
+  batteryPopup.classList.remove("active");
+  batteryPopup.setAttribute("aria-hidden","true");
+  batteryBlackout.classList.add("active");
+  batteryBlackout.setAttribute("aria-hidden","false");
+  window.setTimeout(()=>{
+    batteryBlackout.classList.remove("active");
+    batteryBlackout.setAttribute("aria-hidden","true");
+  },7000);
 });
 
 /* SPRUCH-GENERATOR */
