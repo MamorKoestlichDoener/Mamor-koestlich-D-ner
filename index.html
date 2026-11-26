@@ -623,9 +623,10 @@ function startBsodProgress(){
     }
     bsodPercent++;
     byId("bsodProgress").textContent=bsodPercent+"% abgeschlossen";
-    /* Absichtlich unregelmäßig: kurze Sprünge, normale Pausen und einzelne lange Hänger. */
+    /* Weiterhin unregelmäßig, aber insgesamt deutlich schneller: meist kurze
+       Pausen, gelegentlich ein schneller Sprung und selten ein längerer Hänger. */
     const r=Math.random();
-    const delay=r<0.20 ? 750+Math.random()*650 : r<0.43 ? 75+Math.random()*125 : 260+Math.random()*360;
+    const delay=r<0.12 ? 320+Math.random()*280 : r<0.42 ? 25+Math.random()*55 : 90+Math.random()*90;
     bsodProgressTimer=window.setTimeout(tick,delay);
   };
   bsodProgressTimer=window.setTimeout(tick,450);
