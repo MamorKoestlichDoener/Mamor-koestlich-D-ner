@@ -239,6 +239,20 @@ footer .imprint-button{margin-top:16px;background:#211a0d;color:var(--light)}
 .recovery-copy{font-size:clamp(13px,1.8vw,15px);line-height:1.9;margin:0 0 18px}
 .recovery-actions{font-size:clamp(16px,2.2vw,19px);line-height:1.55;margin-top:clamp(44px,10vh,90px)}
 
+
+/* Windows-Starteinstellungen nach F8 */
+#startupSettings{display:none;position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;overflow:auto;background:#2670b4;color:#f5f7fb;font-family:"Segoe UI",Arial,sans-serif;padding:clamp(22px,5vw,42px);z-index:2147483647}
+#startupSettings.active{display:block!important}
+.startup-inner{max-width:1000px;margin:0 auto}
+.startup-heading{font-size:clamp(32px,5vw,42px);font-weight:300;margin:0 0 18px}
+.startup-lead{font-size:clamp(17px,2.4vw,20px);line-height:1.5;margin:0 0 16px}
+.startup-hint{font-size:clamp(13px,1.8vw,15px);margin:0 0 30px}
+.startup-options{list-style:none;padding:0;margin:0;font-size:clamp(16px,2.2vw,19px);line-height:1.58}
+.startup-options li{margin:0}
+.startup-option{display:block;width:100%;text-align:left;color:inherit;background:transparent;border:0;border-radius:0;padding:0;margin:0;font:inherit;line-height:inherit;cursor:pointer}
+.startup-option:hover,.startup-option:focus-visible{background:rgba(255,255,255,.13);outline:1px solid rgba(255,255,255,.6)}
+#startupHiddenClose{position:fixed;top:0;right:0;width:64px;height:64px;padding:0;border:0;background:transparent;opacity:0;z-index:2147483647}
+
 </style>
 </head>
 <body>
@@ -426,6 +440,27 @@ footer .imprint-button{margin-top:16px;background:#211a0d;color:var(--light)}
 <div id="restartBlack" aria-hidden="true"></div>
 <div id="acerBoot" aria-hidden="true"><div class="acer-logo">acer</div><div class="wait-spinner" aria-hidden="true"></div></div>
 <div id="recoveryScreen" aria-hidden="true"><button id="recoveryHiddenClose" type="button" aria-label="Wiederherstellungsbildschirm schließen" title=""></button><div class="recovery-inner"><h1 class="recovery-heading">Wiederherstellung</h1><p class="recovery-lead">Der PC konnte nicht ordnungsgemäß gestartet werden.</p><p class="recovery-copy">Für die Erstellung eines RAMDISK-Geräts ist nicht genügend Speicherplatz verfügbar.</p><p class="recovery-copy">Fehlercode: 0xc0000017</p><p class="recovery-copy">Sie müssen Wiederherstellungstools verwenden. Wenn Sie kein Installationsmedium (z. B. einen Datenträger oder ein USB-Gerät) besitzen, wenden Sie sich an den PC-Administrator oder den PC-/Gerätehersteller.</p><div class="recovery-actions">Drücken Sie die Eingabetaste, um es erneut zu versuchen.<br>Drücken Sie F8, um Starteinstellungen aufzurufen.</div></div></div>
+
+<div id="startupSettings" aria-hidden="true">
+  <button id="startupHiddenClose" type="button" aria-label="Starteinstellungen schließen"></button>
+  <div class="startup-inner">
+    <h1 class="startup-heading">Starteinstellungen</h1>
+    <p class="startup-lead">Drücken Sie eine Nummerntaste, um eine der Optionen unten<br>auszuwählen:</p>
+    <p class="startup-hint">Verwenden Sie die Nummerntasten oder die Funktionstasten F1-F9.</p>
+    <ol class="startup-options">
+      <li><button class="startup-option" type="button" data-option="1">1) Debugmodus aktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="2">2) Startprotokollierung aktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="3">3) Video mit niedriger Auflösung aktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="4">4) Abgesicherten Modus aktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="5">5) Abgesicherten Modus mit Netzwerktreibern aktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="6">6) Abgesicherten Modus mit Eingabeaufforderung aktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="7">7) Erzwingen der Treibersignatur deaktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="8">8) Schutz des Antischadsoftware-Frühstarts deaktivieren</button></li>
+      <li><button class="startup-option" type="button" data-option="9">9) Automatischen Neustart bei Systemfehler deaktivieren</button></li>
+    </ol>
+  </div>
+</div>
+
 
 <footer><p>Alles aus Joke :P - Mamor Köstlich Döner 2026 ®</p>
 <p class="small">Mamor International Döner Holding · Abteilung für unnötige Angelegenheiten</p>
@@ -656,7 +691,7 @@ async function runFakeRestartSequence(){
   fakeRestartRunning=true;
   const restart=byId("restartScreen"), black=byId("restartBlack"), acer=byId("acerBoot"), recovery=byId("recoveryScreen");
   /* Die Elemente ans Ende des body setzen, damit sie sicher über der Website liegen. */
-  [restart,black,acer,recovery].forEach(element=>document.body.appendChild(element));
+  [restart,black,acer,recovery,byId("startupSettings")].forEach(element=>document.body.appendChild(element));
   hideFakeScreen(bsod);
   document.body.style.setProperty("overflow","hidden","important");
   document.documentElement.style.setProperty("overflow","hidden","important");
@@ -688,6 +723,28 @@ function closeRecoveryScreen(){
   document.documentElement.style.removeProperty("overflow");
   fakeRestartRunning=false;
 }
+function openStartupSettings(){
+  if(!byId("recoveryScreen").classList.contains("active"))return;
+  hideFakeScreen(byId("recoveryScreen"));
+  const startup=byId("startupSettings");
+  startup.classList.add("active");
+  startup.setAttribute("aria-hidden","false");
+  startup.style.setProperty("display","block","important");
+  startup.style.setProperty("position","fixed","important");
+  startup.style.setProperty("inset","0","important");
+  startup.style.setProperty("z-index","2147483647","important");
+}
+async function chooseStartupOption(option){
+  const startup=byId("startupSettings");
+  if(!startup.classList.contains("active")||! /^[1-9]$/.test(String(option)))return;
+  startup.classList.remove("active");
+  startup.setAttribute("aria-hidden","true");
+  startup.style.setProperty("display","none","important");
+  /* Jede Auswahl simuliert einen weiteren Neustart und führt danach zurück
+     zum Wiederherstellungsbildschirm. */
+  fakeRestartRunning=false;
+  await runFakeRestartSequence();
+}
 
 function openBsod(event){
 if(event)event.preventDefault();
@@ -715,10 +772,34 @@ byId("contactButton").addEventListener("click",()=>{
 byId("contactMessage").textContent="Kein Kontaktformular nötig da alles Perfekt ist";
 });
 byId("recoveryHiddenClose").addEventListener("click",closeRecoveryScreen);
+byId("startupHiddenClose").addEventListener("click",()=>{
+  byId("startupSettings").classList.remove("active");
+  byId("startupSettings").setAttribute("aria-hidden","true");
+  byId("startupSettings").style.setProperty("display","none","important");
+  showFakeScreen(byId("recoveryScreen"),"block");
+});
+document.querySelectorAll(".startup-option").forEach(button=>{
+  button.addEventListener("click",()=>chooseStartupOption(button.dataset.option));
+});
 byId("contactDetailsButton").addEventListener("click",openBsod);
 byId("closeBsod").addEventListener("click",closeBsod);
 document.addEventListener("keydown",event=>{
-if(event.key==="Escape"&&bsod.classList.contains("active"))closeBsod();
+  if(event.key==="Escape"&&bsod.classList.contains("active")){closeBsod();return;}
+  const recovery=byId("recoveryScreen");
+  const startup=byId("startupSettings");
+  if(recovery.classList.contains("active")&&event.key==="F8"){
+    event.preventDefault();
+    openStartupSettings();
+    return;
+  }
+  if(startup.classList.contains("active")){
+    const functionMatch=event.key.match(/^F([1-9])$/);
+    const numberMatch=event.key.match(/^[1-9]$/);
+    if(functionMatch||numberMatch){
+      event.preventDefault();
+      chooseStartupOption(functionMatch?functionMatch[1]:event.key);
+    }
+  }
 });
 
 
