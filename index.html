@@ -222,14 +222,14 @@ footer .imprint-button{margin-top:16px;background:#211a0d;color:var(--light)}
 
 /* Simulierte Neustart- und Wiederherstellungsbildschirme */
 #restartScreen,#restartBlack,#acerBoot,#recoveryScreen{display:none;position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:2147483646}
-#restartScreen.active{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;background:#0078d7;color:#fff;font-family:"Segoe UI",Arial,sans-serif;font-size:clamp(22px,3vw,34px)}
+#restartScreen.active{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:28px;background:#0078d7;color:#fff;font-family:"Segoe UI",Arial,sans-serif;font-size:clamp(22px,3vw,34px)}
 .wait-spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:waitspin .9s linear infinite}
 @keyframes waitspin{to{transform:rotate(360deg)}}
-#restartBlack.active{display:block;background:#000;z-index:2147483647}
-#acerBoot.active{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;background:#000;color:#80bd32;z-index:2147483647}
+#restartBlack.active{display:block!important;background:#000;z-index:2147483647}
+#acerBoot.active{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:34px;background:#000;color:#80bd32;z-index:2147483647}
 .acer-logo{font-family:Arial,sans-serif;font-weight:900;font-style:italic;font-size:clamp(76px,15vw,150px);letter-spacing:-.09em;line-height:1}
 #acerBoot .wait-spinner{width:34px;height:34px;border-width:3px}
-#recoveryScreen.active{display:block;overflow:auto;background:#2670b4;color:#f5f7fb;font-family:"Segoe UI",Arial,sans-serif;padding:clamp(22px,5vw,36px);z-index:2147483647}
+#recoveryScreen.active{display:block!important;overflow:auto;background:#2670b4;color:#f5f7fb;font-family:"Segoe UI",Arial,sans-serif;padding:clamp(22px,5vw,36px);z-index:2147483647}
 .recovery-inner{max-width:1000px;margin:0 auto}
 .recovery-heading{font-size:clamp(32px,5vw,42px);font-weight:300;margin:0 0 18px}
 .recovery-lead{font-size:clamp(17px,2.4vw,20px);margin:0 0 18px}
@@ -624,26 +624,49 @@ runFakeRestartSequence();
 },55);
 }
 
-function runFakeRestartSequence(){
-  bsod.classList.remove("active");
-  bsod.setAttribute("aria-hidden","true");
-  document.body.style.overflow="hidden";
-  document.documentElement.style.overflow="hidden";
+let fakeRestartRunning=false;
+function showFakeScreen(element, displayMode){
+  /* Inline display + !important verhindert, dass andere Website-CSS-Regeln
+     die simulierten Systembildschirme unsichtbar machen. */
+  element.classList.add("active");
+  element.setAttribute("aria-hidden","false");
+  element.style.setProperty("display",displayMode,"important");
+  element.style.setProperty("position","fixed","important");
+  element.style.setProperty("inset","0","important");
+  element.style.setProperty("width","100vw","important");
+  element.style.setProperty("height","100dvh","important");
+  element.style.setProperty("z-index","2147483647","important");
+}
+function hideFakeScreen(element){
+  element.classList.remove("active");
+  element.setAttribute("aria-hidden","true");
+  element.style.setProperty("display","none","important");
+}
+function waitForFakeBoot(ms){return new Promise(resolve=>window.setTimeout(resolve,ms));}
+async function runFakeRestartSequence(){
+  if(fakeRestartRunning)return;
+  fakeRestartRunning=true;
   const restart=byId("restartScreen"), black=byId("restartBlack"), acer=byId("acerBoot"), recovery=byId("recoveryScreen");
-  restart.classList.add("active");
-  restart.setAttribute("aria-hidden","false");
-  window.setTimeout(()=>{
-    restart.classList.remove("active");restart.setAttribute("aria-hidden","true");
-    black.classList.add("active");
-    window.setTimeout(()=>{
-      black.classList.remove("active");
-      acer.classList.add("active");acer.setAttribute("aria-hidden","false");
-      window.setTimeout(()=>{
-        acer.classList.remove("active");acer.setAttribute("aria-hidden","true");
-        recovery.classList.add("active");recovery.setAttribute("aria-hidden","false");
-      },5000);
-    },4000);
-  },20000);
+  /* Die Elemente ans Ende des body setzen, damit sie sicher über der Website liegen. */
+  [restart,black,acer,recovery].forEach(element=>document.body.appendChild(element));
+  hideFakeScreen(bsod);
+  document.body.style.setProperty("overflow","hidden","important");
+  document.documentElement.style.setProperty("overflow","hidden","important");
+
+  showFakeScreen(restart,"flex");
+  await waitForFakeBoot(20000);
+  hideFakeScreen(restart);
+
+  showFakeScreen(black,"block");
+  await waitForFakeBoot(4000);
+  hideFakeScreen(black);
+
+  showFakeScreen(acer,"flex");
+  await waitForFakeBoot(5000);
+  hideFakeScreen(acer);
+
+  showFakeScreen(recovery,"block");
+  /* Das Wiederherstellungsmenü bleibt sichtbar, bis die Seite neu geladen wird. */
 }
 
 function openBsod(event){
