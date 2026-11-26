@@ -226,10 +226,13 @@ footer .imprint-button{margin-top:16px;background:#211a0d;color:var(--light)}
 .wait-spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:waitspin .9s linear infinite}
 @keyframes waitspin{to{transform:rotate(360deg)}}
 #restartBlack.active{display:block!important;background:#000;z-index:2147483647}
-#acerBoot.active{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:34px;background:#000;color:#80bd32;z-index:2147483647}
-.acer-logo{font-family:Arial,sans-serif;font-weight:900;font-style:italic;font-size:clamp(76px,15vw,150px);letter-spacing:-.09em;line-height:1}
-#acerBoot .wait-spinner{width:34px;height:34px;border-width:3px}
+#acerBoot.active{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:48px;background:#000;color:#80bd32;z-index:2147483647}
+.acer-logo{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-style:italic;font-size:clamp(88px,17vw,168px);letter-spacing:-.105em;line-height:1;transform:scaleX(1.08);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;color:#83bd32}
+#acerBoot .wait-spinner{width:38px;height:38px;border-width:3px;border-color:rgba(255,255,255,.2);border-top-color:#f5f5f5}
 #recoveryScreen.active{display:block!important;overflow:auto;background:#2670b4;color:#f5f7fb;font-family:"Segoe UI",Arial,sans-serif;padding:clamp(22px,5vw,36px);z-index:2147483647}
+/* Unsichtbare Schließen-Fläche ganz oben rechts im Wiederherstellungsbildschirm */
+#recoveryHiddenClose{position:fixed;top:0;right:0;width:64px;height:64px;padding:0;border:0;background:transparent;opacity:0;cursor:default;z-index:2147483647;appearance:none;-webkit-appearance:none}
+#recoveryHiddenClose:focus-visible{opacity:.12;outline:2px solid rgba(255,255,255,.7);outline-offset:-4px}
 .recovery-inner{max-width:1000px;margin:0 auto}
 .recovery-heading{font-size:clamp(32px,5vw,42px);font-weight:300;margin:0 0 18px}
 .recovery-lead{font-size:clamp(17px,2.4vw,20px);margin:0 0 18px}
@@ -422,7 +425,7 @@ footer .imprint-button{margin-top:16px;background:#211a0d;color:var(--light)}
 <div id="restartScreen" aria-hidden="true"><div class="wait-spinner" aria-hidden="true"></div><div>Wird neu gestartet</div></div>
 <div id="restartBlack" aria-hidden="true"></div>
 <div id="acerBoot" aria-hidden="true"><div class="acer-logo">acer</div><div class="wait-spinner" aria-hidden="true"></div></div>
-<div id="recoveryScreen" aria-hidden="true"><div class="recovery-inner"><h1 class="recovery-heading">Wiederherstellung</h1><p class="recovery-lead">Der PC konnte nicht ordnungsgemäß gestartet werden.</p><p class="recovery-copy">Für die Erstellung eines RAMDISK-Geräts ist nicht genügend Speicherplatz verfügbar.</p><p class="recovery-copy">Fehlercode: 0xc0000017</p><p class="recovery-copy">Sie müssen Wiederherstellungstools verwenden. Wenn Sie kein Installationsmedium (z. B. einen Datenträger oder ein USB-Gerät) besitzen, wenden Sie sich an den PC-Administrator oder den PC-/Gerätehersteller.</p><div class="recovery-actions">Drücken Sie die Eingabetaste, um es erneut zu versuchen.<br>Drücken Sie F8, um Starteinstellungen aufzurufen.</div></div></div>
+<div id="recoveryScreen" aria-hidden="true"><button id="recoveryHiddenClose" type="button" aria-label="Wiederherstellungsbildschirm schließen" title=""></button><div class="recovery-inner"><h1 class="recovery-heading">Wiederherstellung</h1><p class="recovery-lead">Der PC konnte nicht ordnungsgemäß gestartet werden.</p><p class="recovery-copy">Für die Erstellung eines RAMDISK-Geräts ist nicht genügend Speicherplatz verfügbar.</p><p class="recovery-copy">Fehlercode: 0xc0000017</p><p class="recovery-copy">Sie müssen Wiederherstellungstools verwenden. Wenn Sie kein Installationsmedium (z. B. einen Datenträger oder ein USB-Gerät) besitzen, wenden Sie sich an den PC-Administrator oder den PC-/Gerätehersteller.</p><div class="recovery-actions">Drücken Sie die Eingabetaste, um es erneut zu versuchen.<br>Drücken Sie F8, um Starteinstellungen aufzurufen.</div></div></div>
 
 <footer><p>Alles aus Joke :P - Mamor Köstlich Döner 2026 ®</p>
 <p class="small">Mamor International Döner Holding · Abteilung für unnötige Angelegenheiten</p>
@@ -608,20 +611,24 @@ bsodFace.addEventListener("keydown",event=>{
 });
 
 function startBsodProgress(){
-if(bsodProgressTimer)clearInterval(bsodProgressTimer);
-bsodPercent=3;
-byId("bsodProgress").textContent="3% abgeschlossen";
-bsodProgressTimer=setInterval(()=>{
-if(!bsod.classList.contains("active"))return;
-if(bsodPercent<100){
-bsodPercent++;
-byId("bsodProgress").textContent=bsodPercent+"% abgeschlossen";
-}else{
-clearInterval(bsodProgressTimer);
-bsodProgressTimer=null;
-runFakeRestartSequence();
-}
-},55);
+  if(bsodProgressTimer)clearTimeout(bsodProgressTimer);
+  bsodPercent=3;
+  byId("bsodProgress").textContent="3% abgeschlossen";
+  const tick=()=>{
+    if(!bsod.classList.contains("active"))return;
+    if(bsodPercent>=100){
+      bsodProgressTimer=null;
+      runFakeRestartSequence();
+      return;
+    }
+    bsodPercent++;
+    byId("bsodProgress").textContent=bsodPercent+"% abgeschlossen";
+    /* Absichtlich unregelmäßig: kurze Sprünge, normale Pausen und einzelne lange Hänger. */
+    const r=Math.random();
+    const delay=r<0.20 ? 750+Math.random()*650 : r<0.43 ? 75+Math.random()*125 : 260+Math.random()*360;
+    bsodProgressTimer=window.setTimeout(tick,delay);
+  };
+  bsodProgressTimer=window.setTimeout(tick,450);
 }
 
 let fakeRestartRunning=false;
@@ -653,6 +660,11 @@ async function runFakeRestartSequence(){
   document.body.style.setProperty("overflow","hidden","important");
   document.documentElement.style.setProperty("overflow","hidden","important");
 
+  /* Kurzer schwarzer Übergang direkt nach dem BSOD, bevor der Neustarttext erscheint. */
+  showFakeScreen(black,"block");
+  await waitForFakeBoot(3000);
+  hideFakeScreen(black);
+
   showFakeScreen(restart,"flex");
   await waitForFakeBoot(20000);
   hideFakeScreen(restart);
@@ -662,11 +674,18 @@ async function runFakeRestartSequence(){
   hideFakeScreen(black);
 
   showFakeScreen(acer,"flex");
-  await waitForFakeBoot(5000);
+  await waitForFakeBoot(12000);
   hideFakeScreen(acer);
 
   showFakeScreen(recovery,"block");
-  /* Das Wiederherstellungsmenü bleibt sichtbar, bis die Seite neu geladen wird. */
+  /* Der Bildschirm bleibt stehen, bis die unsichtbare Schließen-Fläche oben rechts gedrückt wird. */
+}
+function closeRecoveryScreen(){
+  const recovery=byId("recoveryScreen");
+  hideFakeScreen(recovery);
+  document.body.style.removeProperty("overflow");
+  document.documentElement.style.removeProperty("overflow");
+  fakeRestartRunning=false;
 }
 
 function openBsod(event){
@@ -686,7 +705,7 @@ bsod.setAttribute("aria-hidden","true");
 document.body.style.overflow="";
 document.documentElement.style.overflow="";
 if(bsodProgressTimer){
-clearInterval(bsodProgressTimer);
+clearTimeout(bsodProgressTimer);
 bsodProgressTimer=null;
 }
 }
@@ -694,6 +713,7 @@ bsodProgressTimer=null;
 byId("contactButton").addEventListener("click",()=>{
 byId("contactMessage").textContent="Kein Kontaktformular nötig da alles Perfekt ist";
 });
+byId("recoveryHiddenClose").addEventListener("click",closeRecoveryScreen);
 byId("contactDetailsButton").addEventListener("click",openBsod);
 byId("closeBsod").addEventListener("click",closeBsod);
 document.addEventListener("keydown",event=>{
